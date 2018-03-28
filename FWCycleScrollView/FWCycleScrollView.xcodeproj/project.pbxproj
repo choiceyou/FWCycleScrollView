@@ -17,6 +17,7 @@
 		49480389206B2F2C00B73AB6 /* FWCycleScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49480388206B2F2C00B73AB6 /* FWCycleScrollView.swift */; };
 		4948038B206B40F600B73AB6 /* FWUIImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948038A206B40F600B73AB6 /* FWUIImageViewCell.swift */; };
 		4948038D206B410400B73AB6 /* FWUIviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948038C206B410400B73AB6 /* FWUIviewCell.swift */; };
+		AF3AE499206BBA5A009CFA85 /* FWPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3AE498206BBA5A009CFA85 /* FWPageControl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		49480388206B2F2C00B73AB6 /* FWCycleScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FWCycleScrollView.swift; sourceTree = "<group>"; };
 		4948038A206B40F600B73AB6 /* FWUIImageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FWUIImageViewCell.swift; sourceTree = "<group>"; };
 		4948038C206B410400B73AB6 /* FWUIviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FWUIviewCell.swift; sourceTree = "<group>"; };
+		AF3AE498206BBA5A009CFA85 /* FWPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FWPageControl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +140,7 @@
 				49480388206B2F2C00B73AB6 /* FWCycleScrollView.swift */,
 				4948038A206B40F600B73AB6 /* FWUIImageViewCell.swift */,
 				4948038C206B410400B73AB6 /* FWUIviewCell.swift */,
+				AF3AE498206BBA5A009CFA85 /* FWPageControl.swift */,
 			);
 			path = FWCycleScrollView;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 				4948038D206B410400B73AB6 /* FWUIviewCell.swift in Sources */,
 				4948035A206B2EAA00B73AB6 /* AppDelegate.swift in Sources */,
 				4948038B206B40F600B73AB6 /* FWUIImageViewCell.swift in Sources */,
+				AF3AE499206BBA5A009CFA85 /* FWPageControl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

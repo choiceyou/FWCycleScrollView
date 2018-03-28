@@ -12,6 +12,28 @@ import UIKit
 let imageViewCellId = "imageViewCellId"
 let viewCellId = "viewCellId"
 
+/// page类型
+///
+/// - none: 无page
+/// - classic: 系统自带经典样式
+/// - animated: 动画类型
+@objc public enum PageControlType: Int {
+    case none
+    case classic
+    case animated
+}
+
+/// page位置
+///
+/// - center: 中偏下位置
+/// - right: 右偏下位置
+/// - left: 左偏下位置
+@objc public enum PageControlAliment: Int {
+    case center
+    case right
+    case left
+}
+
 
 open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -39,6 +61,14 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
     /// 轮播次数
     @objc public var loopTimes = 100
     
+    @objc public var pageControlType: PageControlType = .classic {
+        willSet {
+            
+        }
+    }
+    
+    
+    private var pageControl: UIControl?
     
     /// Item总计条数
     private var totalItemsCount: Int {
