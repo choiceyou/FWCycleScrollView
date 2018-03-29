@@ -62,7 +62,16 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
     }
     
     /// 是否自动轮播
-    @objc public var autoScroll = true
+    @objc public var autoScroll = true {
+        willSet {
+            self.invalidateTimer()
+            if newValue {
+                self.setupTimer()
+            }
+        }
+    }
+    /// 自动轮播间隔时间
+    @objc public var autoScrollTimeInterval: TimeInterval = 5.0
     
     /// 分页控件
     private var pageControl: UIPageControl?
@@ -111,6 +120,9 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
     private var totalItemsCount: Int {
         return self.sourceCount * self.loopTimes
     }
+    
+    /// 轮播定时器
+    private var rollTimer: Timer?
     
     private lazy var collectionViewFlowLayout: UICollectionViewFlowLayout = {
         
@@ -218,6 +230,7 @@ extension FWCycleScrollView {
         self.imageUrlStrArray = imageUrlStrArray
         self.viewArray = viewArray
         self.pageControlType = .classic
+        self.autoScroll = true
     }
 }
 
@@ -288,14 +301,40 @@ extension FWCycleScrollView {
 // MARK: - 滚动相关
 extension FWCycleScrollView {
     
+    public func setupTimer() {
+        
+        self.invalidateTimer()
+        
+        if self.autoScroll {
+            self.rollTimer = Timer.scheduledTimer(timeInterval: self.autoScrollTimeInterval, target: self, selector: #selector(automaticScroll), userInfo: nil, repeats: true)
+            RunLoop.main.add(self.rollTimer!, forMode: .commonModes)
+        }
+    }
+    
+    public func invalidateTimer() {
+        
+        if self.rollTimer != nil {
+            self.rollTimer?.invalidate()
+            self.rollTimer = nil
+        }
+    }
+    
+    @objc private func automaticScroll() {
+        
+        if self.totalItemsCount == 0 {
+            return
+        }
+        
+        var targetIndex = self.currentIndex() + 1
+        self.scrollToIndex(targetIndex: &targetIndex)
+    }
+    
     /// 手动控制滚动到某一个index
     ///
     /// - Parameter index: 下标
     public func makeScrollViewScrollToIndex(index: Int) {
         
-        if self.autoScroll {
-            
-        }
+        self.invalidateTimer()
         
         if self.sourceCount == 0 {
             return
@@ -304,9 +343,7 @@ extension FWCycleScrollView {
         var tmpIndex = index + self.totalItemsCount / 2
         self.scrollToIndex(targetIndex: &tmpIndex)
         
-        if self.autoScroll {
-            
-        }
+        self.setupTimer()
     }
     
     public func scrollToIndex(targetIndex: inout Int) {
@@ -318,7 +355,7 @@ extension FWCycleScrollView {
             }
             return
         }
-        self.collectionView.scrollToItem(at: IndexPath(item: targetIndex, section: 0), at: .right, animated: false)
+        self.collectionView.scrollToItem(at: IndexPath(item: targetIndex, section: 0), at: .right, animated: true)
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -339,16 +376,12 @@ extension FWCycleScrollView {
     
     public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
-        if self.autoScroll {
-            
-        }
+        self.invalidateTimer()
     }
     
     public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         
-        if self.autoScroll {
-            
-        }
+        self.setupTimer()
     }
     
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
