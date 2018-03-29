@@ -180,7 +180,7 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
                 targetIndex = self.totalItemsCount / 2
             }
             if self.collectionView.numberOfItems(inSection: 0) == self.totalItemsCount {
-                self.collectionView.scrollToItem(at: IndexPath(item: targetIndex, section: 0), at: .right , animated: false)
+                self.startScrollToItem(targetIndex: targetIndex)
             }
         }
         
@@ -411,11 +411,19 @@ extension FWCycleScrollView {
         if targetIndex >= self.totalItemsCount {
             if self.loopTimes > 0 {
                 targetIndex = self.totalItemsCount / 2
-                self.collectionView.scrollToItem(at: IndexPath(item: targetIndex, section: 0), at: .right, animated: false)
+                self.startScrollToItem(targetIndex: targetIndex)
             }
             return
         }
-        self.collectionView.scrollToItem(at: IndexPath(item: targetIndex, section: 0), at: .right, animated: true)
+        self.startScrollToItem(targetIndex: targetIndex)
+    }
+    
+    private func startScrollToItem(targetIndex: Int) {
+        if self.scrollDirection == .horizontal {
+            self.collectionView.scrollToItem(at: IndexPath(item: targetIndex, section: 0), at: .right, animated: true)
+        } else {
+            self.collectionView.scrollToItem(at: IndexPath(item: targetIndex, section: 0), at: .bottom, animated: true)
+        }
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {

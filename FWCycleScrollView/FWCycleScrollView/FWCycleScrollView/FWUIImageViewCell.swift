@@ -19,6 +19,7 @@ class FWUIImageViewCell: UICollectionViewCell {
         self.backgroundColor = UIColor.white
         
         self.imageView.frame = self.bounds
+        self.imageView.contentMode = .scaleToFill
         self.addSubview(self.imageView)
     }
     
