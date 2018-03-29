@@ -44,34 +44,44 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
     
     /// 本地图片
     @objc public var localizationImageNameArray: [String]? {
-        willSet {
+        didSet {
             self.collectionView.register(FWUIImageViewCell.self, forCellWithReuseIdentifier: kImageViewCellId)
+            self.sourceArray = localizationImageNameArray as [AnyObject]?
         }
     }
     /// 网络图片
     @objc public var imageUrlStrArray: [String]? {
-        willSet {
+        didSet {
             self.collectionView.register(FWUIImageViewCell.self, forCellWithReuseIdentifier: kImageViewCellId)
+            self.sourceArray = imageUrlStrArray as [AnyObject]?
         }
     }
     /// 自定义UI等
     @objc public var viewArray: [UIView]? {
-        willSet {
+        didSet {
             self.collectionView.register(FWUIviewCell.self, forCellWithReuseIdentifier: kViewCellId)
+            self.sourceArray = viewArray as [AnyObject]?
         }
     }
     
     /// 是否自动轮播
     @objc public var autoScroll = true {
-        willSet {
+        didSet {
             self.invalidateTimer()
-            if newValue {
+            if autoScroll {
                 self.setupTimer()
             }
         }
     }
     /// 自动轮播间隔时间
-    @objc public var autoScrollTimeInterval: TimeInterval = 5.0
+    @objc public var autoScrollTimeInterval: TimeInterval = 5.0 {
+        didSet {
+            self.invalidateTimer()
+            if autoScrollTimeInterval > 0 {
+                self.setupTimer()
+            }
+        }
+    }
     
     /// 分页控件
     private var pageControl: UIPageControl?
@@ -85,8 +95,8 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
     @objc public var pageDotColor = UIColor.lightGray
     /// 分页控件类型
     @objc public var pageControlType: PageControlType = .classic {
-        willSet {
-            self.setupPageControl(pageCT: newValue)
+        didSet {
+            self.setupPageControl()
         }
     }
     /// 分页控件位置
@@ -103,6 +113,16 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
     /// 某一项点击回调
     @objc public var itemDidClickedBlock: ItemDidClickedBlock?
     
+    
+    /// 传入的资源
+    private var sourceArray: [AnyObject]? {
+        didSet {
+            self.collectionView.reloadData()
+            self.pageControlType = .classic
+            self.autoScroll = true
+            self.layoutIfNeeded()
+        }
+    }
     
     /// 传入的资源总数
     private var sourceCount: Int {
@@ -159,7 +179,9 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
             if self.loopTimes > 0 {
                 targetIndex = self.totalItemsCount / 2
             }
-            self.collectionView.scrollToItem(at: IndexPath(item: targetIndex, section: 0), at: .right , animated: false)
+            if self.collectionView.numberOfItems(inSection: 0) == self.totalItemsCount {
+                self.collectionView.scrollToItem(at: IndexPath(item: targetIndex, section: 0), at: .right , animated: false)
+            }
         }
         
         if self.pageControl != nil {
@@ -171,15 +193,20 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
             if self.pageControlAliment == .center {
                 pX = (self.frame.width - pSize.width) / 2
             } else if self.pageControlAliment == .left {
-                pX = pageControlMargin
+                pX = pageControlMargin * 2
             } else if self.pageControlAliment == .right {
-                pX = self.frame.width - pSize.width - pageControlMargin
+                pX = self.frame.width - pSize.width - pageControlMargin * 2
             }
             let pY = self.frame.height - pSize.height - pageControlMargin
             
             let pageControlFrame = CGRect(x: pX + self.pageControlInsets.left - self.pageControlInsets.right, y: pY + self.pageControlInsets.top - self.pageControlInsets.bottom, width: pSize.width, height: pSize.height)
             self.pageControl!.frame = pageControlFrame
         }
+    }
+    
+    deinit {
+        self.collectionView.delegate = nil
+        self.collectionView.dataSource = nil
     }
 }
 
@@ -188,9 +215,20 @@ extension FWCycleScrollView {
     
     /// 类初始化方法
     ///
+    /// - Parameter frame: FWCycleScrollView的大小
+    /// - Returns: self
+    @objc open class func cycleImage(frame: CGRect) -> FWCycleScrollView {
+        
+        let cycleScrollView = FWCycleScrollView(frame: frame)
+        cycleScrollView.setupUI(localizationImageNameArray: nil, imageUrlStrArray: nil, viewArray: nil)
+        return cycleScrollView
+    }
+    
+    /// 类初始化方法
+    ///
     /// - Parameters:
     ///   - localizationImageNameArray: 本地图片名称
-    ///   - frame: frame
+    ///   - frame: FWCycleScrollView的大小
     /// - Returns: self
     @objc open class func cycleImage(localizationImageNameArray: [String]?, frame: CGRect) -> FWCycleScrollView {
         
@@ -203,7 +241,7 @@ extension FWCycleScrollView {
     ///
     /// - Parameters:
     ///   - imageUrlStrArray: 网络图片URL地址
-    ///   - frame: frame
+    ///   - frame: FWCycleScrollView的大小
     /// - Returns: self
     @objc open class func cycleImage(imageUrlStrArray: [String]?, frame: CGRect) -> FWCycleScrollView {
         
@@ -216,7 +254,7 @@ extension FWCycleScrollView {
     ///
     /// - Parameters:
     ///   - viewArray: 自定义UI等
-    ///   - frame: frame
+    ///   - frame: FWCycleScrollView的大小
     /// - Returns: self
     @objc open class func cycleView(viewArray: [UIView]?, frame: CGRect) -> FWCycleScrollView {
         
@@ -229,8 +267,6 @@ extension FWCycleScrollView {
         self.localizationImageNameArray = localizationImageNameArray
         self.imageUrlStrArray = imageUrlStrArray
         self.viewArray = viewArray
-        self.pageControlType = .classic
-        self.autoScroll = true
     }
 }
 
@@ -252,16 +288,22 @@ extension FWCycleScrollView {
             return cell
         }
     }
+    
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if self.itemDidClickedBlock != nil {
+            self.itemDidClickedBlock!(indexPath.row % self.sourceCount)
+        }
+    }
 }
 
 // MARK: - 其他
 extension FWCycleScrollView {
     
-    private func setupPageControl(pageCT: PageControlType) {
+    private func setupPageControl() {
         if self.pageControl != nil {
             self.pageControl?.removeFromSuperview()
         }
-        switch pageCT {
+        switch self.pageControlType {
         case .none:
             self.pageControl = nil
         case .classic:
@@ -280,7 +322,11 @@ extension FWCycleScrollView {
     }
     
     private func pageControlIndex(cellIndex: Int) -> Int {
-        return cellIndex % self.sourceCount
+        if self.sourceCount > 0 {
+            return cellIndex % self.sourceCount
+        } else {
+            return 0
+        }
     }
     
     private func currentIndex() -> Int {
@@ -329,6 +375,16 @@ extension FWCycleScrollView {
         self.scrollToIndex(targetIndex: &targetIndex)
     }
     
+    /// 解决当父View释放时，当前视图因为被Timer强引用而不能释放的问题
+    ///
+    /// - Parameter newSuperview: 父视图
+    open override func willMove(toSuperview newSuperview: UIView?) {
+        
+        if newSuperview == nil {
+            self.invalidateTimer()
+        }
+    }
+    
     /// 手动控制滚动到某一个index
     ///
     /// - Parameter index: 下标
@@ -347,6 +403,10 @@ extension FWCycleScrollView {
     }
     
     public func scrollToIndex(targetIndex: inout Int) {
+        
+        if self.collectionView.numberOfItems(inSection: 0) != self.totalItemsCount {
+            return
+        }
         
         if targetIndex >= self.totalItemsCount {
             if self.loopTimes > 0 {

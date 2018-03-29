@@ -19,9 +19,17 @@ class ViewController: UIViewController {
         self.view.backgroundColor = UIColor.lightGray
         
         
-        let cycleScrollView = FWCycleScrollView.cycleImage(localizationImageNameArray: adArray, frame: CGRect(x: 0, y: 100, width: self.view.frame.width, height: 180))
+        let cycleScrollView = FWCycleScrollView.cycleImage(frame: CGRect(x: 0, y: 100, width: self.view.frame.width, height: 180))
         self.view.addSubview(cycleScrollView)
-        
+        cycleScrollView.localizationImageNameArray = adArray
+        cycleScrollView.autoScrollTimeInterval = 2.0
+        cycleScrollView.pageControlAliment = .right
+        cycleScrollView.itemDidClickedBlock = { (index) in
+            print("当前点击了第\(index)个广告位")
+        }
+        cycleScrollView.itemDidScrollBlock = { (index) in
+            print("当前轮播到了第\(index)个广告位")
+        }
     }
 
     override func didReceiveMemoryWarning() {
