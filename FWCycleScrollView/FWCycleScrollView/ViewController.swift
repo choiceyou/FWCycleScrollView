@@ -27,7 +27,9 @@ class ViewController: UIViewController {
     
     lazy var cycleScrollView1: FWCycleScrollView = {
         
-        let cycleScrollView = FWCycleScrollView.cycleImage(localizationImageNameArray: adArray, frame: CGRect(x: 0, y: 50, width: self.view.frame.width, height: 180))
+        let cycleScrollView = FWCycleScrollView.cycleImage(localizationImageNameArray: adArray, frame: CGRect(x: 0, y: 20, width: self.view.frame.width, height: 180))
+        //        cycleScrollView.pageControlType = .custom
+        //        cycleScrollView.autoScrollTimeInterval = 2.0
         return cycleScrollView
     }()
     
@@ -39,6 +41,10 @@ class ViewController: UIViewController {
         cycleScrollView.pageControlAliment = .right
         cycleScrollView.pageControlType = .classic
         cycleScrollView.scrollDirection = .vertical
+        cycleScrollView.currentPageDotColor = UIColor.red
+        cycleScrollView.pageDotColor = UIColor.white
+        // cycleScrollView.pageControlDotSize = CGSize(width: 20, height: 10)
+        cycleScrollView.pageControlMargin = 15
         cycleScrollView.itemDidClickedBlock = { (index) in
             print("当前点击了第\(index + 1)个广告位")
         }

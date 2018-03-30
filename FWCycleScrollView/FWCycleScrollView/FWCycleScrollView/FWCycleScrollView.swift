@@ -16,11 +16,11 @@ let kViewCellId = "viewCellId"
 ///
 /// - none: 无page
 /// - classic: 系统自带经典样式
-/// - animated: 动画类型
+/// - custom: 自定义类型
 @objc public enum PageControlType: Int {
     case none
     case classic
-    case animated
+    case custom
 }
 
 /// 分页控件位置
@@ -84,15 +84,23 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
     }
     
     /// 分页控件
-    private var pageControl: UIPageControl?
+    private var pageControl: UIControl?
     /// 轮播图滚动方向
     @objc public var scrollDirection: UICollectionViewScrollDirection = .horizontal
     /// 轮播轮回次数（1个轮回指的是1组UI轮播完成）
     @objc public var loopTimes = 100
     /// 选中分页控件的颜色
-    @objc public var currentPageDotColor = UIColor.white
+    @objc public var currentPageDotColor = UIColor.white {
+        didSet {
+            self.setupPageControl()
+        }
+    }
     /// 未选中分页控件的颜色
-    @objc public var pageDotColor = UIColor.lightGray
+    @objc public var pageDotColor = UIColor.lightGray {
+        didSet {
+            self.setupPageControl()
+        }
+    }
     /// 分页控件类型
     @objc public var pageControlType: PageControlType = .classic {
         didSet {
@@ -186,16 +194,18 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
         
         if self.pageControl != nil {
             var pSize = CGSize(width: 0, height: 0)
-            if self.pageControl != nil && self.pageControl!.isKind(of: UIPageControl.self) {
+            if self.pageControl!.isKind(of: UIPageControl.self) {
                 pSize = CGSize(width: CGFloat(self.sourceCount) * self.pageControlDotSize.width, height: self.pageControlDotSize.height)
+            } else if self.pageControl!.isKind(of: FWPageControl.self) {
+                
             }
             var pX: CGFloat = 0
             if self.pageControlAliment == .center {
                 pX = (self.frame.width - pSize.width) / 2
             } else if self.pageControlAliment == .left {
-                pX = pageControlMargin * 2
+                pX = pageControlMargin + 10
             } else if self.pageControlAliment == .right {
-                pX = self.frame.width - pSize.width - pageControlMargin * 2
+                pX = self.frame.width - pSize.width - (pageControlMargin + 10)
             }
             let pY = self.frame.height - pSize.height - pageControlMargin
             
@@ -309,15 +319,22 @@ extension FWCycleScrollView {
         case .classic:
             let tmpPageControl = UIPageControl()
             tmpPageControl.numberOfPages = self.sourceCount
-            tmpPageControl.currentPageIndicatorTintColor = currentPageDotColor
+            tmpPageControl.currentPageIndicatorTintColor = self.currentPageDotColor
             tmpPageControl.pageIndicatorTintColor = self.pageDotColor
             tmpPageControl.isUserInteractionEnabled = false
             tmpPageControl.currentPage = self.pageControlIndex(cellIndex: self.currentIndex())
             self.addSubview(tmpPageControl)
             
             self.pageControl = tmpPageControl
-        default: break
+        case .custom:
+            let tmpPageControl = FWPageControl()
+            tmpPageControl.numberOfPages = self.sourceCount
+            tmpPageControl.currentPageDotColor = self.currentPageDotColor
+            tmpPageControl.pageControlDotSize = self.pageControlDotSize
+            tmpPageControl.pageDotColor = self.pageDotColor
+            self.addSubview(tmpPageControl)
             
+            self.pageControl = tmpPageControl
         }
     }
     
@@ -436,7 +453,7 @@ extension FWCycleScrollView {
         let indexOnPageControl = self.pageControlIndex(cellIndex: itemIndex)
         
         if self.pageControl!.isKind(of: UIPageControl.self) {
-            self.pageControl!.currentPage = indexOnPageControl
+            (self.pageControl as! UIPageControl).currentPage = indexOnPageControl
         } else {
             
         }
