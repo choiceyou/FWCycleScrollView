@@ -28,8 +28,8 @@ class ViewController: UIViewController {
     lazy var cycleScrollView1: FWCycleScrollView = {
         
         let cycleScrollView = FWCycleScrollView.cycleImage(localizationImageNameArray: adArray, frame: CGRect(x: 0, y: 20, width: self.view.frame.width, height: 180))
-        //        cycleScrollView.pageControlType = .custom
-        //        cycleScrollView.autoScrollTimeInterval = 2.0
+            cycleScrollView.customDotViewType = .hollow
+            cycleScrollView.autoScrollTimeInterval = 100.0
         return cycleScrollView
     }()
     
@@ -77,7 +77,7 @@ class ViewController: UIViewController {
         self.view.addSubview(self.scrollView)
         
         self.scrollView.addSubview(self.cycleScrollView1)
-        self.scrollView.addSubview(self.cycleScrollView2)
+//        self.scrollView.addSubview(self.cycleScrollView2)
         
     }
     

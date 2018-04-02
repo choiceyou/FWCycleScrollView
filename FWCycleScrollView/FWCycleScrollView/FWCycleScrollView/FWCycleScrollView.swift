@@ -107,6 +107,16 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
             self.setupPageControl()
         }
     }
+    /// 自定义分页控件类型
+    @objc public var customDotViewType: FWCustomDotViewType = .hollow {
+        didSet {
+            self.pageControlType = .custom
+        }
+    }
+    /// 未选中分页控件：图片方式
+    @objc public var pageDotImage: UIImage?
+    /// 选中分页控件：图片方式
+    @objc public var currentPageDotImage: UIImage?
     /// 分页控件位置
     @objc public var pageControlAliment: PageControlAliment = .center
     /// 分页控件小圆标大小
@@ -197,7 +207,7 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
             if self.pageControl!.isKind(of: UIPageControl.self) {
                 pSize = CGSize(width: CGFloat(self.sourceCount) * self.pageControlDotSize.width, height: self.pageControlDotSize.height)
             } else if self.pageControl!.isKind(of: FWPageControl.self) {
-                
+                pSize = CGSize(width: CGFloat(self.sourceCount) * self.pageControlDotSize.width + ((self.pageControl as! FWPageControl).spacingBetweenDots * CGFloat((self.sourceCount - 1))), height: self.pageControlDotSize.height)
             }
             var pX: CGFloat = 0
             if self.pageControlAliment == .center {
@@ -332,6 +342,7 @@ extension FWCycleScrollView {
             tmpPageControl.currentPageDotColor = self.currentPageDotColor
             tmpPageControl.pageControlDotSize = self.pageControlDotSize
             tmpPageControl.pageDotColor = self.pageDotColor
+            tmpPageControl.customDotViewType = self.customDotViewType
             self.addSubview(tmpPageControl)
             
             self.pageControl = tmpPageControl
@@ -455,7 +466,7 @@ extension FWCycleScrollView {
         if self.pageControl!.isKind(of: UIPageControl.self) {
             (self.pageControl as! UIPageControl).currentPage = indexOnPageControl
         } else {
-            
+            (self.pageControl as! FWPageControl).currentPage = indexOnPageControl
         }
     }
     
