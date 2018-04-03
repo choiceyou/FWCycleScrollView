@@ -27,7 +27,6 @@ class ViewController: UIViewController {
         scrollView.backgroundColor = UIColor.clear
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.bounces = false
-        scrollView.contentSize = CGSize(width: self.view.bounds.width, height: self.view.bounds.height * 2)
         return scrollView
     }()
     
@@ -175,6 +174,8 @@ class ViewController: UIViewController {
         self.scrollView.addSubview(self.cycleScrollView5)
         self.scrollView.addSubview(self.cycleScrollView6)
         self.scrollView.addSubview(self.cycleScrollView7)
+        
+        self.scrollView.contentSize = CGSize(width: self.view.bounds.width, height: self.cycleScrollView7.frame.maxY + 20)
     }
     
     func setupUIView(index: Int) -> UILabel {
