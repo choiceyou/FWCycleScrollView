@@ -67,6 +67,8 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
             self.sourceArray = imageUrlStrArray as [AnyObject]?
         }
     }
+    /// 预加载图片
+    @objc public var placeholderImage: UIImage?
     /// 自定义UI等
     @objc public var viewArray: [UIView]? {
         didSet {
@@ -272,7 +274,7 @@ extension FWCycleScrollView {
     @objc open class func cycleImage(frame: CGRect) -> FWCycleScrollView {
         
         let cycleScrollView = FWCycleScrollView(frame: frame)
-        cycleScrollView.setupUI(localizationImageNameArray: nil, imageUrlStrArray: nil, viewArray: nil)
+        cycleScrollView.setupUI(localizationImageNameArray: nil, imageUrlStrArray: nil, placeholderImage: nil, viewArray: nil)
         return cycleScrollView
     }
     
@@ -285,7 +287,7 @@ extension FWCycleScrollView {
     @objc open class func cycleImage(localizationImageNameArray: [String]?, frame: CGRect) -> FWCycleScrollView {
         
         let cycleScrollView = FWCycleScrollView(frame: frame)
-        cycleScrollView.setupUI(localizationImageNameArray: localizationImageNameArray, imageUrlStrArray: nil, viewArray: nil)
+        cycleScrollView.setupUI(localizationImageNameArray: localizationImageNameArray, imageUrlStrArray: nil, placeholderImage: nil, viewArray: nil)
         return cycleScrollView
     }
     
@@ -293,12 +295,13 @@ extension FWCycleScrollView {
     ///
     /// - Parameters:
     ///   - imageUrlStrArray: 网络图片URL地址
+    ///   - placeholderImage: 预加载图片
     ///   - frame: FWCycleScrollView的大小
     /// - Returns: self
-    @objc open class func cycleImage(imageUrlStrArray: [String]?, frame: CGRect) -> FWCycleScrollView {
+    @objc open class func cycleImage(imageUrlStrArray: [String]?, placeholderImage: UIImage?, frame: CGRect) -> FWCycleScrollView {
         
         let cycleScrollView = FWCycleScrollView(frame: frame)
-        cycleScrollView.setupUI(localizationImageNameArray: nil, imageUrlStrArray: imageUrlStrArray, viewArray: nil)
+        cycleScrollView.setupUI(localizationImageNameArray: nil, imageUrlStrArray: imageUrlStrArray, placeholderImage: placeholderImage, viewArray: nil)
         return cycleScrollView
     }
     
@@ -311,13 +314,14 @@ extension FWCycleScrollView {
     @objc open class func cycleView(viewArray: [UIView]?, frame: CGRect) -> FWCycleScrollView {
         
         let cycleScrollView = FWCycleScrollView(frame: frame)
-        cycleScrollView.setupUI(localizationImageNameArray: nil, imageUrlStrArray: nil, viewArray: viewArray)
+        cycleScrollView.setupUI(localizationImageNameArray: nil, imageUrlStrArray: nil, placeholderImage: nil, viewArray: viewArray)
         return cycleScrollView
     }
     
-    private func setupUI(localizationImageNameArray: [String]?, imageUrlStrArray: [String]?, viewArray: [UIView]?) {
+    private func setupUI(localizationImageNameArray: [String]?, imageUrlStrArray: [String]?, placeholderImage: UIImage?, viewArray: [UIView]?) {
         self.localizationImageNameArray = localizationImageNameArray
         self.imageUrlStrArray = imageUrlStrArray
+        self.placeholderImage = placeholderImage
         self.viewArray = viewArray
     }
     
@@ -344,11 +348,11 @@ extension FWCycleScrollView {
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if self.imageUrlStrArray != nil || self.localizationImageNameArray != nil {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kImageViewCellId, for: indexPath) as! FWUIImageViewCell
-            cell.setupUI(imageName: (self.localizationImageNameArray != nil) ? self.localizationImageNameArray![(indexPath.row % self.localizationImageNameArray!.count)] : nil, imageUrl: (self.imageUrlStrArray != nil) ? self.imageUrlStrArray![(indexPath.row % self.imageUrlStrArray!.count)] : nil)
+            cell.setupUI(imageName: (self.localizationImageNameArray != nil) ? self.localizationImageNameArray![(indexPath.row % self.localizationImageNameArray!.count)] : nil, imageUrl: (self.imageUrlStrArray != nil) ? self.imageUrlStrArray![(indexPath.row % self.imageUrlStrArray!.count)] : nil, placeholderImage: self.placeholderImage)
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kViewCellId, for: indexPath) as! FWUIviewCell
-            
+            cell.addSubview(self.viewArray![(indexPath.row % self.viewArray!.count)])
             return cell
         }
     }

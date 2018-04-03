@@ -18,6 +18,7 @@
 		4948038B206B40F600B73AB6 /* FWUIImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948038A206B40F600B73AB6 /* FWUIImageViewCell.swift */; };
 		4948038D206B410400B73AB6 /* FWUIviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948038C206B410400B73AB6 /* FWUIviewCell.swift */; };
 		49646DC4206DC969002D2911 /* FWCustomDotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49646DC3206DC969002D2911 /* FWCustomDotView.swift */; };
+		AE5AEA38A87F6786D757C248 /* Pods_FWCycleScrollView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F06571749997F832238A83 /* Pods_FWCycleScrollView.framework */; };
 		AF3AE499206BBA5A009CFA85 /* FWPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3AE498206BBA5A009CFA85 /* FWPageControl.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		28F06571749997F832238A83 /* Pods_FWCycleScrollView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FWCycleScrollView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		351AF667AE950B06CDF5D997 /* Pods_FWCycleScrollViewTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FWCycleScrollViewTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		49480356206B2EAA00B73AB6 /* FWCycleScrollView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FWCycleScrollView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49480359206B2EAA00B73AB6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4948035B206B2EAA00B73AB6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +59,9 @@
 		4948038A206B40F600B73AB6 /* FWUIImageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FWUIImageViewCell.swift; sourceTree = "<group>"; };
 		4948038C206B410400B73AB6 /* FWUIviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FWUIviewCell.swift; sourceTree = "<group>"; };
 		49646DC3206DC969002D2911 /* FWCustomDotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FWCustomDotView.swift; sourceTree = "<group>"; };
+		6E525E8A74CD74EAD701E57D /* Pods_FWCycleScrollViewUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FWCycleScrollViewUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7879C6446B21D851A262AAA7 /* Pods-FWCycleScrollView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FWCycleScrollView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FWCycleScrollView/Pods-FWCycleScrollView.debug.xcconfig"; sourceTree = "<group>"; };
+		98004EA36D5C7989704990A3 /* Pods-FWCycleScrollView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FWCycleScrollView.release.xcconfig"; path = "Pods/Target Support Files/Pods-FWCycleScrollView/Pods-FWCycleScrollView.release.xcconfig"; sourceTree = "<group>"; };
 		AF3AE498206BBA5A009CFA85 /* FWPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FWPageControl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE5AEA38A87F6786D757C248 /* Pods_FWCycleScrollView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +91,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1679A5F096AF4215CFC74C8C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7879C6446B21D851A262AAA7 /* Pods-FWCycleScrollView.debug.xcconfig */,
+				98004EA36D5C7989704990A3 /* Pods-FWCycleScrollView.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		4948034D206B2EAA00B73AB6 = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +107,8 @@
 				4948036D206B2EAB00B73AB6 /* FWCycleScrollViewTests */,
 				49480378206B2EAB00B73AB6 /* FWCycleScrollViewUITests */,
 				49480357206B2EAA00B73AB6 /* Products */,
+				1679A5F096AF4215CFC74C8C /* Pods */,
+				F781C0226E523024BB93E1B2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -148,6 +166,16 @@
 			path = FWCycleScrollView;
 			sourceTree = "<group>";
 		};
+		F781C0226E523024BB93E1B2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				28F06571749997F832238A83 /* Pods_FWCycleScrollView.framework */,
+				351AF667AE950B06CDF5D997 /* Pods_FWCycleScrollViewTests.framework */,
+				6E525E8A74CD74EAD701E57D /* Pods_FWCycleScrollViewUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -155,9 +183,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4948037E206B2EAB00B73AB6 /* Build configuration list for PBXNativeTarget "FWCycleScrollView" */;
 			buildPhases = (
+				2CC79AA015A86C4914FADB36 /* [CP] Check Pods Manifest.lock */,
 				49480352206B2EAA00B73AB6 /* Sources */,
 				49480353206B2EAA00B73AB6 /* Frameworks */,
 				49480354206B2EAA00B73AB6 /* Resources */,
+				061D8C4878DE59439F81FDDC /* [CP] Embed Pods Frameworks */,
+				38E3B5EA9CEBC13FD122DDBC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -276,6 +307,60 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		061D8C4878DE59439F81FDDC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-FWCycleScrollView/Pods-FWCycleScrollView-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FWCycleScrollView/Pods-FWCycleScrollView-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2CC79AA015A86C4914FADB36 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FWCycleScrollView-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		38E3B5EA9CEBC13FD122DDBC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FWCycleScrollView/Pods-FWCycleScrollView-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		49480352206B2EAA00B73AB6 /* Sources */ = {
@@ -452,6 +537,7 @@
 		};
 		4948037F206B2EAB00B73AB6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7879C6446B21D851A262AAA7 /* Pods-FWCycleScrollView.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -467,6 +553,7 @@
 		};
 		49480380206B2EAB00B73AB6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 98004EA36D5C7989704990A3 /* Pods-FWCycleScrollView.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

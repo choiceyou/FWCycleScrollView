@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 class FWUIImageViewCell: UICollectionViewCell {
     
@@ -27,12 +28,12 @@ class FWUIImageViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupUI(imageName: String?, imageUrl: String?) {
+    func setupUI(imageName: String?, imageUrl: String?, placeholderImage: UIImage?) {
         
         if imageName != nil {
             self.imageView.image = UIImage(named: imageName!)
-        } else {
-            
+        } else if imageUrl != nil {
+            self.imageView.kf.setImage(with: URL(string: imageUrl!), placeholder: placeholderImage, options: nil, progressBlock: nil, completionHandler: nil)
         }
     }
 }
