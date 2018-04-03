@@ -18,7 +18,6 @@ class ViewController: UIViewController {
         
         let scrollView = UIScrollView.init(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         scrollView.backgroundColor = UIColor.clear
-        scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.bounces = false
         scrollView.contentSize = CGSize(width: self.view.bounds.width, height: self.view.bounds.height * 1.5)
@@ -28,14 +27,12 @@ class ViewController: UIViewController {
     lazy var cycleScrollView1: FWCycleScrollView = {
         
         let cycleScrollView = FWCycleScrollView.cycleImage(localizationImageNameArray: adArray, frame: CGRect(x: 0, y: 20, width: self.view.frame.width, height: 180))
-            cycleScrollView.customDotViewType = .hollow
-            cycleScrollView.autoScrollTimeInterval = 100.0
         return cycleScrollView
     }()
     
     lazy var cycleScrollView2: FWCycleScrollView = {
         
-        let cycleScrollView = FWCycleScrollView.cycleImage(frame: CGRect(x: 0, y: self.cycleScrollView1.frame.maxY + 20, width: self.view.frame.width, height: 180))
+        let cycleScrollView = FWCycleScrollView.cycleImage(frame: CGRect(x: 0, y: self.cycleScrollView1.frame.maxY + 20, width: self.view.frame.width, height: 140))
         cycleScrollView.localizationImageNameArray = adArray2
         cycleScrollView.autoScrollTimeInterval = 2.0
         cycleScrollView.pageControlAliment = .right
@@ -53,6 +50,39 @@ class ViewController: UIViewController {
         }
         return cycleScrollView
     }()
+    
+    lazy var cycleScrollView3: FWCycleScrollView = {
+        
+        let cycleScrollView = FWCycleScrollView.cycleImage(localizationImageNameArray: adArray, frame: CGRect(x: 0, y: self.cycleScrollView2.frame.maxY + 20, width: self.view.frame.width, height: 180))
+        cycleScrollView.setupDotImage(pageDotImage: UIImage(named: "pageControlDot")!, currentPageDotImage: UIImage(named: "pageControlCurrentDot")!)
+        cycleScrollView.autoScrollTimeInterval = 2.5
+        return cycleScrollView
+    }()
+    
+    lazy var cycleScrollView4: FWCycleScrollView = {
+        
+        let cycleScrollView = FWCycleScrollView.cycleImage(localizationImageNameArray: adArray, frame: CGRect(x: 0, y: self.cycleScrollView3.frame.maxY + 20, width: self.view.frame.width, height: 140))
+        cycleScrollView.currentPageDotEnlargeTimes = 1.2
+        cycleScrollView.customDotViewType = .hollow
+        cycleScrollView.pageDotColor = UIColor.white
+        cycleScrollView.currentPageDotColor = UIColor.white
+        cycleScrollView.pageControlDotSize = CGSize(width: 10, height: 10)
+        cycleScrollView.autoScrollTimeInterval = 2.0
+        return cycleScrollView
+    }()
+    
+    lazy var cycleScrollView5: FWCycleScrollView = {
+        
+        let cycleScrollView = FWCycleScrollView.cycleImage(localizationImageNameArray: adArray, frame: CGRect(x: 0, y: self.cycleScrollView4.frame.maxY + 20, width: self.view.frame.width, height: 140))
+        cycleScrollView.currentPageDotEnlargeTimes = 1.0
+        cycleScrollView.customDotViewType = .solid
+        cycleScrollView.pageDotColor = UIColor.lightGray
+        cycleScrollView.currentPageDotColor = UIColor.yellow
+        cycleScrollView.pageControlDotSize = CGSize(width: 15, height: 15)
+        cycleScrollView.autoScrollTimeInterval = 2.0
+        return cycleScrollView
+    }()
+    
     
     lazy var cycleScrollView22: FWCycleScrollView = {
         
@@ -77,15 +107,15 @@ class ViewController: UIViewController {
         self.view.addSubview(self.scrollView)
         
         self.scrollView.addSubview(self.cycleScrollView1)
-//        self.scrollView.addSubview(self.cycleScrollView2)
-        
+        self.scrollView.addSubview(self.cycleScrollView2)
+        self.scrollView.addSubview(self.cycleScrollView3)
+        self.scrollView.addSubview(self.cycleScrollView4)
+        self.scrollView.addSubview(self.cycleScrollView5)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
 }
 

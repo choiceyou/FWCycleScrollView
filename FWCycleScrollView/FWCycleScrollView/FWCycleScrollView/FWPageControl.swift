@@ -40,6 +40,9 @@ class FWPageControl: UIControl {
     /// 选中分页控件：图片方式
     public var currentPageDotImage: UIImage?
     
+    /// 自定义分页控件，选中分页控件放大的倍数
+    public var currentPageDotEnlargeTimes: CGFloat = 0.0
+    
     private var dotViewArray: [FWCustomDotView] = []
     
     override var frame: CGRect {
@@ -88,11 +91,20 @@ extension FWPageControl {
     
     private func generateDotView() -> FWCustomDotView {
         
-        let customDotView = FWCustomDotView(frame: CGRect(x: 0, y: 0, width: self.pageControlDotSize.width, height: self.pageControlDotSize.height))
+        let customDotView = FWCustomDotView()
         customDotView.isUserInteractionEnabled = true
         customDotView.pageDotColor = self.pageDotColor
         customDotView.currentPageDotColor = self.currentPageDotColor
         customDotView.customDotViewType = self.customDotViewType
+        if self.pageDotImage != nil {
+            customDotView.pageDotImage = pageDotImage
+        }
+        if self.currentPageDotImage != nil {
+            customDotView.currentPageDotImage = currentPageDotImage
+        }
+        if self.currentPageDotEnlargeTimes > 0 {
+            customDotView.currentPageDotEnlargeTimes = self.currentPageDotEnlargeTimes
+        }
         self.addSubview(customDotView)
         self.dotViewArray.append(customDotView)
         return customDotView
@@ -100,14 +112,20 @@ extension FWPageControl {
     
     private func updateDotFrame(dotView: FWCustomDotView, index: Int) {
         
-        let x = self.pageControlDotSize.width * CGFloat(index) + self.spacingBetweenDots * CGFloat(index)
+        var w: CGFloat = 0.0
+        var h: CGFloat = 0.0
+        if self.customDotViewType == .image && self.pageDotImage != nil {
+            w = self.pageDotImage!.size.width
+            h = self.pageDotImage!.size.height
+        } else {
+            w = self.pageControlDotSize.width
+            h = self.pageControlDotSize.height
+        }
+        
+        let x = w * CGFloat(index) + self.spacingBetweenDots * CGFloat(index)
         let y = (self.frame.height - self.pageControlDotSize.height) / 2
         
-        dotView.frame = CGRect(x: x, y: y, width: self.pageControlDotSize.width, height: self.pageControlDotSize.height)
-    }
-    
-    private func sizeForNumberOfPages(pageCount: Int) -> CGSize {
-        return CGSize(width: (self.pageControlDotSize.width + self.spacingBetweenDots) * CGFloat(pageCount) - self.spacingBetweenDots, height: self.pageControlDotSize.height)
+        dotView.frame = CGRect(x: x, y: y, width: w, height: h)
     }
     
     private func changeActivity(active: Bool, index: Int) {

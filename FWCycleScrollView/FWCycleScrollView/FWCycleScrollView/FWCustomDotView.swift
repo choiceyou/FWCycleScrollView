@@ -9,17 +9,6 @@
 import Foundation
 import UIKit
 
-/// 自定义分页控件类型，默认为hollow
-///
-/// - hollow: 空心
-/// - solid: 实心
-/// - image: 图片
-@objc public enum FWCustomDotViewType: Int {
-    case hollow
-    case solid
-    case image
-}
-
 class FWCustomDotView: UIView {
     
     /// 选中分页控件的颜色
@@ -30,21 +19,19 @@ class FWCustomDotView: UIView {
     public var customDotViewType: FWCustomDotViewType?
     
     /// 未选中分页控件：图片方式
-    public var pageDotImage: UIImageView?
+    public var pageDotImage: UIImage?
     /// 选中分页控件：图片方式
-    public var currentPageDotImage: UIImageView?
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    public var currentPageDotImage: UIImage?
+    /// 分页控件：图片方式
+    public lazy var pageDotImageView: UIImageView? = {
         
-        if self.customDotViewType == .image {
-            
-        }
-    }
+        let pageDotImageView = UIImageView()
+        self.addSubview(pageDotImageView)
+        return pageDotImageView
+    }()
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    /// 自定义分页控件，选中分页控件放大的倍数
+    public var currentPageDotEnlargeTimes: CGFloat = 1.4
     
     override var frame: CGRect {
         didSet {
@@ -58,7 +45,9 @@ class FWCustomDotView: UIView {
                 self.layer.cornerRadius = frame.width / 2
                 self.layer.borderWidth = 0
             } else if self.customDotViewType == .image {
-                
+                self.layer.borderWidth = 0
+                self.pageDotImageView?.frame = self.bounds
+                self.pageDotImageView?.image = self.pageDotImage
             }
         }
     }
@@ -75,8 +64,16 @@ class FWCustomDotView: UIView {
     public func animateToActiveState() {
         
         UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: -20, options: .curveLinear, animations: {
-            self.backgroundColor = self.currentPageDotColor
-            self.transform = CGAffineTransform(scaleX: 1.4, y: 1.4)
+            
+            if self.customDotViewType == nil || self.customDotViewType == .hollow {
+                self.backgroundColor = self.currentPageDotColor
+            } else if self.customDotViewType == .solid {
+                self.backgroundColor = self.currentPageDotColor
+            } else if self.customDotViewType == .image {
+                self.pageDotImageView?.image = self.currentPageDotImage
+            }
+            self.transform = CGAffineTransform(scaleX: self.currentPageDotEnlargeTimes, y: self.currentPageDotEnlargeTimes)
+            
         }) { (finished) in
             
         }
@@ -85,15 +82,16 @@ class FWCustomDotView: UIView {
     public func animateToDeactiveState() {
         
         UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveLinear, animations: {
+            
             if self.customDotViewType == nil || self.customDotViewType == .hollow {
                 self.backgroundColor = UIColor.clear
             } else if self.customDotViewType == .solid {
                 self.backgroundColor = self.pageDotColor
             } else if self.customDotViewType == .image {
-                
+                self.pageDotImageView?.image = self.pageDotImage
             }
-            
             self.transform = CGAffineTransform.identity
+            
         }) { (finished) in
             
         }

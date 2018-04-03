@@ -12,7 +12,7 @@ import UIKit
 let kImageViewCellId = "imageViewCellId"
 let kViewCellId = "viewCellId"
 
-/// 分页控件类型
+/// 分页控件类型，默认为classic
 ///
 /// - none: 无page
 /// - classic: 系统自带经典样式
@@ -21,6 +21,17 @@ let kViewCellId = "viewCellId"
     case none
     case classic
     case custom
+}
+
+/// 自定义分页控件类型（即：self.pageControlType == .custom），默认为hollow
+///
+/// - hollow: 空心
+/// - solid: 实心
+/// - image: 图片
+@objc public enum FWCustomDotViewType: Int {
+    case hollow
+    case solid
+    case image
 }
 
 /// 分页控件位置
@@ -113,18 +124,25 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
             self.pageControlType = .custom
         }
     }
-    /// 未选中分页控件：图片方式
-    @objc public var pageDotImage: UIImage?
-    /// 选中分页控件：图片方式
-    @objc public var currentPageDotImage: UIImage?
     /// 分页控件位置
     @objc public var pageControlAliment: PageControlAliment = .center
-    /// 分页控件小圆标大小
-    @objc public var pageControlDotSize: CGSize = CGSize(width: 10, height: 10)
     /// 分页控件Insets值
     @objc public var pageControlInsets: UIEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
     /// 分页控件默认距离的边距
     @objc public var pageControlMargin: CGFloat = 10
+    
+    /// 分页控件大小，注意：当PageControlType不等于自定义类型时，只能影响当前分页控件的大小，不能影响分页控件原点的大小
+    @objc public var pageControlDotSize: CGSize = CGSize(width: 10, height: 10) {
+        didSet {
+            self.setupPageControl()
+        }
+    }
+    /// 自定义分页控件，选中分页控件放大的倍数
+    @objc public var currentPageDotEnlargeTimes: CGFloat = 0.0 {
+        didSet {
+            self.setupPageControl()
+        }
+    }
     
     /// 某一项滚动回调
     @objc public var itemDidScrollBlock: ItemDidScrollBlock?
@@ -169,6 +187,11 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
         return collectionViewFlowLayout
     }()
     
+    /// 未选中分页控件：图片方式
+    private var pageDotImage: UIImage?
+    /// 选中分页控件：图片方式
+    private var currentPageDotImage: UIImage?
+    
     private lazy var collectionView: UICollectionView = {
         
         let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: self.collectionViewFlowLayout)
@@ -207,7 +230,16 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
             if self.pageControl!.isKind(of: UIPageControl.self) {
                 pSize = CGSize(width: CGFloat(self.sourceCount) * self.pageControlDotSize.width, height: self.pageControlDotSize.height)
             } else if self.pageControl!.isKind(of: FWPageControl.self) {
-                pSize = CGSize(width: CGFloat(self.sourceCount) * self.pageControlDotSize.width + ((self.pageControl as! FWPageControl).spacingBetweenDots * CGFloat((self.sourceCount - 1))), height: self.pageControlDotSize.height)
+                var tmpW: CGFloat = 0.0
+                var tmpH: CGFloat = 0.0
+                if self.customDotViewType == .image && self.pageDotImage != nil {
+                    tmpW = CGFloat(self.sourceCount) * self.pageDotImage!.size.width + ((self.pageControl as! FWPageControl).spacingBetweenDots * CGFloat((self.sourceCount - 1)))
+                    tmpH = self.pageDotImage!.size.height
+                } else {
+                    tmpW = CGFloat(self.sourceCount) * self.pageControlDotSize.width + ((self.pageControl as! FWPageControl).spacingBetweenDots * CGFloat((self.sourceCount - 1)))
+                    tmpH = self.pageControlDotSize.height
+                }
+                pSize = CGSize(width: tmpW, height: tmpH)
             }
             var pX: CGFloat = 0
             if self.pageControlAliment == .center {
@@ -288,6 +320,18 @@ extension FWCycleScrollView {
         self.imageUrlStrArray = imageUrlStrArray
         self.viewArray = viewArray
     }
+    
+    /// 设置自定义分页控件类型的图片类型，注意：当设置了该图片后即表明：self.pageControlType = .custom && self.customDotViewType = .image
+    ///
+    /// - Parameters:
+    ///   - pageDotImage: 未选中分页控件：图片方式
+    ///   - currentPageDotImage: 选中分页控件：图片方式
+    @objc public func setupDotImage(pageDotImage: UIImage, currentPageDotImage: UIImage) {
+        
+        self.pageDotImage = pageDotImage
+        self.currentPageDotImage = currentPageDotImage
+        self.customDotViewType = .image
+    }
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
@@ -343,6 +387,15 @@ extension FWCycleScrollView {
             tmpPageControl.pageControlDotSize = self.pageControlDotSize
             tmpPageControl.pageDotColor = self.pageDotColor
             tmpPageControl.customDotViewType = self.customDotViewType
+            if self.pageDotImage != nil {
+                tmpPageControl.pageDotImage = pageDotImage
+            }
+            if self.currentPageDotImage != nil {
+                tmpPageControl.currentPageDotImage = currentPageDotImage
+            }
+            if self.currentPageDotEnlargeTimes > 0 {
+                tmpPageControl.currentPageDotEnlargeTimes = self.currentPageDotEnlargeTimes
+            }
             self.addSubview(tmpPageControl)
             
             self.pageControl = tmpPageControl
