@@ -12,7 +12,8 @@ class ViewController: UIViewController {
     
     let adArray = ["ad_1", "ad_2", "ad_3"]
     let adArray2 = ["ad_4", "ad_5", "ad_6"]
-    let adArray3 = ["ad_1", "ad_2", "ad_3", "ad_4", "ad_5", "ad_6", "ad_7"]
+    let adArray3 = ["ad_5", "ad_6", "ad_7"]
+    let adArray4 = ["ad_1", "ad_2", "ad_3", "ad_4", "ad_5", "ad_6", "ad_7"]
     
     lazy var scrollView: UIScrollView = {
         
@@ -61,7 +62,7 @@ class ViewController: UIViewController {
     
     lazy var cycleScrollView4: FWCycleScrollView = {
         
-        let cycleScrollView = FWCycleScrollView.cycleImage(localizationImageNameArray: adArray, frame: CGRect(x: 0, y: self.cycleScrollView3.frame.maxY + 20, width: self.view.frame.width, height: 140))
+        let cycleScrollView = FWCycleScrollView.cycleImage(localizationImageNameArray: adArray3, frame: CGRect(x: 0, y: self.cycleScrollView3.frame.maxY + 20, width: self.view.frame.width, height: 140))
         cycleScrollView.currentPageDotEnlargeTimes = 1.2
         cycleScrollView.customDotViewType = .hollow
         cycleScrollView.pageDotColor = UIColor.white
@@ -73,12 +74,12 @@ class ViewController: UIViewController {
     
     lazy var cycleScrollView5: FWCycleScrollView = {
         
-        let cycleScrollView = FWCycleScrollView.cycleImage(localizationImageNameArray: adArray, frame: CGRect(x: 0, y: self.cycleScrollView4.frame.maxY + 20, width: self.view.frame.width, height: 140))
+        let cycleScrollView = FWCycleScrollView.cycleImage(localizationImageNameArray: adArray4, frame: CGRect(x: 0, y: self.cycleScrollView4.frame.maxY + 20, width: self.view.frame.width, height: 140))
         cycleScrollView.currentPageDotEnlargeTimes = 1.0
         cycleScrollView.customDotViewType = .solid
         cycleScrollView.pageDotColor = UIColor.lightGray
         cycleScrollView.currentPageDotColor = UIColor.yellow
-        cycleScrollView.pageControlDotSize = CGSize(width: 15, height: 15)
+        cycleScrollView.pageControlDotSize = CGSize(width: 12, height: 12)
         cycleScrollView.autoScrollTimeInterval = 2.0
         return cycleScrollView
     }()
