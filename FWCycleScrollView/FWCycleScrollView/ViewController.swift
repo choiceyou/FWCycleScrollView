@@ -27,7 +27,7 @@ class ViewController: UIViewController {
         scrollView.backgroundColor = UIColor.clear
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.bounces = false
-        scrollView.contentSize = CGSize(width: self.view.bounds.width, height: self.view.bounds.height * 1.5)
+        scrollView.contentSize = CGSize(width: self.view.bounds.width, height: self.view.bounds.height * 2)
         return scrollView
     }()
     
@@ -39,17 +39,22 @@ class ViewController: UIViewController {
         return cycleScrollView
     }()
     
-    /// 例二：点击广告位回调、纵向滚动、默认分页控件
+    /// 例二：点击广告位回调、纵向滚动、自定义分页控件
     lazy var cycleScrollView2: FWCycleScrollView = {
         let cycleScrollView = FWCycleScrollView.cycleImage(imageUrlStrArray: netAdArray, placeholderImage: UIImage(named: "ad_placeholder"), frame: CGRect(x: 0, y: self.cycleScrollView1.frame.maxY + 20, width: self.view.frame.width, height: 140))
+        
         cycleScrollView.autoScrollTimeInterval = 2.0
+        
+        // 对自定义也分控件的设置
         cycleScrollView.pageControlAliment = .right
-        cycleScrollView.pageControlType = .classic
+        cycleScrollView.currentPageDotEnlargeTimes = 1.0
+        cycleScrollView.customDotViewType = .solid
+        cycleScrollView.pageControlDotSize = CGSize(width: 12, height: 12)
         cycleScrollView.scrollDirection = .vertical
         cycleScrollView.currentPageDotColor = UIColor.red
         cycleScrollView.pageDotColor = UIColor.white
-        // cycleScrollView.pageControlDotSize = CGSize(width: 20, height: 10)
         cycleScrollView.pageControlMargin = 15
+        
         cycleScrollView.itemDidClickedBlock = { (index) in
             print("当前点击了第\(index + 1)个广告位")
         }
@@ -93,12 +98,11 @@ class ViewController: UIViewController {
         return cycleScrollView
     }()
     
-    /// 例五：自定义实心分页控件
+    /// 例五：默认分页控件
     lazy var cycleScrollView5: FWCycleScrollView = {
         
         let cycleScrollView = FWCycleScrollView.cycleImage(localizationImageNameArray: adArray4, frame: CGRect(x: 0, y: self.cycleScrollView4.frame.maxY + 20, width: self.view.frame.width, height: 140))
-        cycleScrollView.currentPageDotEnlargeTimes = 1.0
-        cycleScrollView.customDotViewType = .solid
+        cycleScrollView.pageControlType = .classic
         cycleScrollView.pageDotColor = UIColor.lightGray
         cycleScrollView.currentPageDotColor = UIColor.yellow
         cycleScrollView.pageControlDotSize = CGSize(width: 12, height: 12)
@@ -112,6 +116,7 @@ class ViewController: UIViewController {
         return cycleScrollView
     }()
     
+    /// 例六：轮播自定义视图
     lazy var cycleScrollView6: FWCycleScrollView = {
         
         let customViewArray = [self.setupUIView(index: 0),
@@ -136,6 +141,28 @@ class ViewController: UIViewController {
         return cycleScrollView
     }()
     
+    /// 例七：轮播自定义视图
+    lazy var cycleScrollView7: FWCycleScrollView = {
+        
+        let customViewArray = [self.setupUIView2(index: 0),
+                               self.setupUIView2(index: 1),
+                               self.setupUIView2(index: 2),
+                               self.setupUIView2(index: 3),
+                               self.setupUIView2(index: 4)]
+        
+        let cycleScrollView = FWCycleScrollView.cycleView(viewArray: customViewArray, frame:  CGRect(x: 0, y: self.cycleScrollView6.frame.maxY + 20, width: self.view.frame.width, height: 30))
+        cycleScrollView.pageControlType = .none
+        cycleScrollView.scrollDirection = .vertical
+        cycleScrollView.autoScrollTimeInterval = 2.0
+        cycleScrollView.itemDidClickedBlock = { (index) in
+            print("当前点击了第\(index + 1)个广告位")
+        }
+        cycleScrollView.itemDidScrollBlock = { (index) in
+            // print("当前轮播到了第\(index + 1)个广告位")
+        }
+        return cycleScrollView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -147,6 +174,7 @@ class ViewController: UIViewController {
         self.scrollView.addSubview(self.cycleScrollView4)
         self.scrollView.addSubview(self.cycleScrollView5)
         self.scrollView.addSubview(self.cycleScrollView6)
+        self.scrollView.addSubview(self.cycleScrollView7)
     }
     
     func setupUIView(index: Int) -> UILabel {
@@ -156,6 +184,15 @@ class ViewController: UIViewController {
         label.textColor = UIColor.white
         label.text = "第 \(index + 1) 张自定义视图"
         label.textAlignment = .center
+        return label
+    }
+    
+    func setupUIView2(index: Int) -> UILabel {
+        
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 30))
+        label.backgroundColor = UIColor.lightGray
+        label.textColor = UIColor.white
+        label.text = "第 \(index + 1) 张自定义视图"
         return label
     }
 }
