@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     
     lazy var scrollView: UIScrollView = {
         
-        let scrollView = UIScrollView.init(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+        let scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         scrollView.backgroundColor = UIColor.clear
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.bounces = false
