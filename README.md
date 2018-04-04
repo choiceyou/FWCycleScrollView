@@ -20,7 +20,13 @@ pod 'FWCycleScrollView'<br>
 
 ### OC：
 ```python
-
+NSArray *netAdArray = @[@"http://pic2.16pic.com/00/10/46/16pic_1046407_b.jpg",
+                            @"http://pic.58pic.com/58pic/14/34/62/39S58PIC9jV_1024.jpg",
+                            @"http://pic.qiantucdn.com/58pic/17/70/72/02U58PICKVg_1024.jpg",
+                            @"http://pic.58pic.com/58pic/16/73/95/63E58PICQh7_1024.jpg"];
+FWCycleScrollView *cycleScrollView = [FWCycleScrollView cycleImageWithImageUrlStrArray:netAdArray
+                                                                           placeholderImage:[UIImage imageNamed:@"ad_placeholder"]
+                                                                                      frame:CGRectMake(0, 0, self.view.frame.size.width, 100)];
 ```
 
 
