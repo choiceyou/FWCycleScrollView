@@ -39,7 +39,7 @@
                             ];
     
     // 例一：简单使用、默认分页控件
-    FWCycleScrollView *cycleScrollView1 = [FWCycleScrollView cycleImageWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 180)];
+    FWCycleScrollView *cycleScrollView1 = [FWCycleScrollView cycleWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 180)];
     cycleScrollView1.localizationImageNameArray = adArray;
     [self.scrollView addSubview:cycleScrollView1];
     
@@ -105,10 +105,10 @@
     
     
     // 例五：默认分页控件
-    FWCycleScrollView *cycleScrollView5 = [FWCycleScrollView cycleImageWithLocalizationImageNameArray:adArray3 frame:CGRectMake(0, CGRectGetMaxY(cycleScrollView4.frame) + 20, self.view.frame.size.width, 140)];
+    FWCycleScrollView *cycleScrollView5 = [FWCycleScrollView cycleImageWithLocalizationImageNameArray:adArray4 frame:CGRectMake(0, CGRectGetMaxY(cycleScrollView4.frame) + 20, self.view.frame.size.width, 140)];
     cycleScrollView5.pageControlType = PageControlTypeClassic;
-    cycleScrollView5.currentPageDotColor = [UIColor lightGrayColor];
-    cycleScrollView5.pageDotColor = [UIColor yellowColor];
+    cycleScrollView5.currentPageDotColor = [UIColor yellowColor];
+    cycleScrollView5.pageDotColor = [UIColor lightGrayColor];
     cycleScrollView4.pageControlDotSize = CGSizeMake(12, 12);
     cycleScrollView5.autoScrollTimeInterval = 2.0;
     cycleScrollView5.itemDidClickedBlock = ^(NSInteger index){

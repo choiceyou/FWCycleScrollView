@@ -271,7 +271,7 @@ extension FWCycleScrollView {
     ///
     /// - Parameter frame: FWCycleScrollView的大小
     /// - Returns: self
-    @objc open class func cycleImage(frame: CGRect) -> FWCycleScrollView {
+    @objc open class func cycle(frame: CGRect) -> FWCycleScrollView {
         
         let cycleScrollView = FWCycleScrollView(frame: frame)
         cycleScrollView.setupUI(localizationImageNameArray: nil, imageUrlStrArray: nil, placeholderImage: nil, viewArray: nil)
