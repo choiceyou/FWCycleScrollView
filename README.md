@@ -9,7 +9,7 @@
 ## 支持pod导入：
 
 ```cocoaPods
-pod 'FWCycleScrollView'<br>
+pod 'FWCycleScrollView'
 注意：如出现 Unable to find a specification for 'FWCycleScrollView' 错误，可执行 pod repo update 命令。
 ```
 
