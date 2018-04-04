@@ -33,7 +33,7 @@ class ViewController: UIViewController {
     /// 例一：简单使用、默认分页控件
     lazy var cycleScrollView1: FWCycleScrollView = {
         
-        let cycleScrollView = FWCycleScrollView.cycleImage(frame: CGRect(x: 0, y: 20, width: self.view.frame.width, height: 180))
+        let cycleScrollView = FWCycleScrollView.cycle(frame: CGRect(x: 0, y: 20, width: self.view.frame.width, height: 180))
         cycleScrollView.localizationImageNameArray = adArray
         return cycleScrollView
     }()
