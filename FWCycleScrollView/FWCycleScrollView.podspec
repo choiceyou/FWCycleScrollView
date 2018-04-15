@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "FWCycleScrollView"
-  s.version      = "2.0.2"
+  s.version      = "2.0.3"
   s.summary      = "ios之轮播控件"
 
   # This description is used to generate tags and improve search results.

@@ -161,7 +161,7 @@ class ViewController: UIViewController {
         return cycleScrollView
     }()
     
-    /// 例八：仿直播间礼物列表/产品分类列表
+    /// 例八：仿直播间礼物列表
     lazy var cycleScrollView8: FWCycleScrollView = {
         
         let cycleScrollView = FWCycleScrollView.cycle(frame: CGRect(x: 0, y: self.cycleScrollView7.frame.maxY + 20, width: self.view.frame.width, height: self.view.frame.width/2 + 30), loopTimes: 1)
@@ -175,7 +175,7 @@ class ViewController: UIViewController {
         return cycleScrollView
     }()
     
-    /// 例八：仿直播间礼物列表/产品分类列表
+    /// 例九：仿产品分类列表
     lazy var cycleScrollView9: FWCycleScrollView = {
         
         let cycleScrollView = FWCycleScrollView.cycle(frame: CGRect(x: 0, y: self.cycleScrollView8.frame.maxY + 20, width: self.view.frame.width, height: self.view.frame.width/2 + 30), loopTimes: 1)
