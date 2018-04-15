@@ -1,14 +1,14 @@
 PODS:
   - FWCycleScrollView (2.0.2):
     - Kingfisher
-  - Kingfisher (4.6.4)
+  - Kingfisher (4.7.0)
 
 DEPENDENCIES:
   - FWCycleScrollView
 
 SPEC CHECKSUMS:
   FWCycleScrollView: fa9414386886975f06c1fc5da829541ab7d3f97f
-  Kingfisher: 68498a706e46c2a050b0c9572f100e5db407f6e0
+  Kingfisher: da6b005aa96d37698e3e4f1ccfe96a5b9bbf27d6
 
 PODFILE CHECKSUM: f5677738bd723de450913a4a1c12c8a98ddbbc50
 

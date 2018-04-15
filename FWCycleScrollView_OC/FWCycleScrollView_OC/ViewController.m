@@ -166,6 +166,9 @@
     
     
     
+    // 例八：
+    
+    
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(cycleScrollView7.frame) + 20);
 }
 
