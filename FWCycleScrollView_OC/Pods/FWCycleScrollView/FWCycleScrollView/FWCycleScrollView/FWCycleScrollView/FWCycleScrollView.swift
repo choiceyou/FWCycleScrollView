@@ -53,23 +53,23 @@ public typealias ItemDidClickedBlock = (_ currentIndex: Int) -> Void
 
 open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    /// 本地图片
+    /// 外部传入的本地图片
     @objc public var localizationImageNameArray: [String]? {
         didSet {
             self.collectionView.register(FWUIImageViewCell.self, forCellWithReuseIdentifier: kImageViewCellId)
             self.sourceArray = localizationImageNameArray as [AnyObject]?
         }
     }
-    /// 网络图片
+    /// 外部传入的网络图片URL
     @objc public var imageUrlStrArray: [String]? {
         didSet {
             self.collectionView.register(FWUIImageViewCell.self, forCellWithReuseIdentifier: kImageViewCellId)
             self.sourceArray = imageUrlStrArray as [AnyObject]?
         }
     }
-    /// 预加载图片
+    /// 网络图片预加载图片
     @objc public var placeholderImage: UIImage?
-    /// 自定义UI等
+    /// 外部传入的自定义UI
     @objc public var viewArray: [UIView]? {
         didSet {
             self.collectionView.register(FWUIviewCell.self, forCellWithReuseIdentifier: kViewCellId)
@@ -98,10 +98,10 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
     
     /// 分页控件
     private var pageControl: UIControl?
+    /// 轮播轮回次数，注意：当loopTimes>1时，是无限循环轮播的（1个轮回指的是1组UI轮播完成）
+    private var loopTimes = 100
     /// 轮播图滚动方向
     @objc public var scrollDirection: UICollectionViewScrollDirection = .horizontal
-    /// 轮播轮回次数（1个轮回指的是1组UI轮播完成）
-    @objc public var loopTimes = 100
     /// 选中分页控件的颜色
     @objc public var currentPageDotColor = UIColor.white {
         didSet {
@@ -222,7 +222,7 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
             if self.loopTimes > 0 {
                 targetIndex = self.totalItemsCount / 2
             }
-            if self.collectionView.numberOfItems(inSection: 0) == self.totalItemsCount {
+            if self.collectionView.numberOfItems(inSection: 0) == self.totalItemsCount && self.loopTimes > 1 {
                 self.startScrollToItem(targetIndex: targetIndex, animated: true)
             }
         }
@@ -275,6 +275,19 @@ extension FWCycleScrollView {
         
         let cycleScrollView = FWCycleScrollView(frame: frame)
         cycleScrollView.setupUI(localizationImageNameArray: nil, imageUrlStrArray: nil, placeholderImage: nil, viewArray: nil)
+        return cycleScrollView
+    }
+    
+    /// 类初始化方法
+    ///
+    /// - Parameter frame: FWCycleScrollView的大小
+    /// - Parameter loopTimes: 轮播轮回次数，注意：当loopTimes>1时，是无限循环轮播的（1个轮回指的是1组UI轮播完成）
+    /// - Returns: self
+    @objc open class func cycle(frame: CGRect, loopTimes: Int) -> FWCycleScrollView {
+        
+        let cycleScrollView = FWCycleScrollView(frame: frame)
+        cycleScrollView.setupUI(localizationImageNameArray: nil, imageUrlStrArray: nil, placeholderImage: nil, viewArray: nil)
+        cycleScrollView.loopTimes = loopTimes
         return cycleScrollView
     }
     

@@ -20,6 +20,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = UIColor.lightGrayColor;
+    
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     self.scrollView.backgroundColor = UIColor.clearColor;
     self.scrollView.showsHorizontalScrollIndicator = NO;
@@ -166,7 +168,31 @@
     
     
     
-    self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(cycleScrollView7.frame) + 20);
+    /// 例八：仿直播间礼物列表
+    FWCycleScrollView *cycleScrollView8 = [FWCycleScrollView cycleWithFrame:CGRectMake(0, CGRectGetMaxY(cycleScrollView7.frame) + 20, self.view.frame.size.width, self.view.frame.size.width/2+30) loopTimes:1];
+    cycleScrollView8.viewArray = [self setupCustomSubView:0];
+    cycleScrollView8.currentPageDotEnlargeTimes = 1.0;
+    cycleScrollView8.customDotViewType = FWCustomDotViewTypeHollow;
+    cycleScrollView8.pageDotColor = [UIColor redColor];
+    cycleScrollView8.currentPageDotColor = [UIColor redColor];
+    cycleScrollView8.pageControlDotSize = CGSizeMake(12, 12);
+    cycleScrollView8.autoScroll = NO;
+    [self.scrollView addSubview:cycleScrollView8];
+    
+    
+    /// 例九：仿产品分类列表
+    FWCycleScrollView *cycleScrollView9 = [FWCycleScrollView cycleWithFrame:CGRectMake(0, CGRectGetMaxY(cycleScrollView8.frame) + 20, self.view.frame.size.width, self.view.frame.size.width/2+30) loopTimes:1];
+    cycleScrollView9.viewArray = [self setupCustomSubView:1];
+    cycleScrollView9.currentPageDotEnlargeTimes = 1.0;
+    cycleScrollView9.customDotViewType = FWCustomDotViewTypeHollow;
+    cycleScrollView9.pageDotColor = [UIColor redColor];
+    cycleScrollView9.currentPageDotColor = [UIColor redColor];
+    cycleScrollView9.pageControlDotSize = CGSizeMake(12, 12);
+    cycleScrollView9.autoScroll = NO;
+    [self.scrollView addSubview:cycleScrollView9];
+    
+    
+    self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(cycleScrollView9.frame) + 20);
 }
 
 - (UILabel *)setupUIView:(int)index
@@ -183,9 +209,74 @@
 {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 30)];
     label.text = [NSString stringWithFormat:@"第 %d 张自定义视图", (index + 1)];
-    label.textColor = UIColor.whiteColor;
-    label.backgroundColor = [UIColor lightGrayColor];
+    label.textColor = UIColor.lightGrayColor;
+    label.backgroundColor = [UIColor whiteColor];
     return label;
+}
+
+- (UIView *)setupUIView3:(int)index frame:(CGRect)frame
+{
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"gift_%d",index%20]]];
+    imageView.center = CGPointMake(view.frame.size.width / 2, view.frame.size.height / 2);
+    [view addSubview:imageView];
+    return view;
+}
+
+- (UIView *)setupUIView4:(int)index frame:(CGRect)frame
+{
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    int tmpW = view.frame.size.width *0.6;
+    int tmpH = view.frame.size.height *0.6;
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake((view.frame.size.width-tmpW)/2, (view.frame.size.height-tmpH)/2, tmpW, tmpH)];
+    label.text = [NSString stringWithFormat:@"%d", (index + 1)];
+    label.textColor = UIColor.whiteColor;
+    label.backgroundColor = [UIColor colorWithRed:(float)(1+arc4random()%99)/100 green:(float)(1+arc4random()%99)/100 blue:(float)(1+arc4random()%99)/100 alpha:1];
+    label.font = [UIFont systemFontOfSize:25.0];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.layer.cornerRadius = label.frame.size.width / 2;
+    label.clipsToBounds = YES;
+    [view addSubview:label];
+    
+    return view;
+}
+
+- (NSMutableArray *)setupCustomSubView:(int)subViewType
+{
+    int tmpX = 0;
+    int tmpY = 0;
+    
+    int horizontalRow = 4;
+    int verticalRow = 2;
+    
+    int tmpW = self.view.frame.size.width / horizontalRow;
+    int tmpH = self.view.frame.size.width / 2 / verticalRow;
+    
+    UIView *viewContrainer = nil;
+    NSMutableArray *customSubViewArray = [NSMutableArray array];
+    
+    for (int i=0; i<30; i++) {
+        tmpX = (i % horizontalRow) * tmpW;
+        if (i % (horizontalRow * verticalRow) < horizontalRow) {
+            tmpY = 0;
+        } else {
+            tmpY = tmpH;
+        }
+        
+        if (viewContrainer == nil || (i % (horizontalRow * verticalRow) == 0)) {
+            viewContrainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width /2 + 30)];
+            viewContrainer.backgroundColor = UIColor.whiteColor;
+            [customSubViewArray addObject:viewContrainer];
+        }
+        
+        if (subViewType == 0) {
+            [viewContrainer addSubview:[self setupUIView3:i frame:CGRectMake(tmpX, tmpY, tmpW, tmpH)]];
+        } else {
+            [viewContrainer addSubview:[self setupUIView4:i frame:CGRectMake(tmpX, tmpY, tmpW, tmpH)]];
+        }
+    }
+    return customSubViewArray;
 }
 
 - (void)didReceiveMemoryWarning {

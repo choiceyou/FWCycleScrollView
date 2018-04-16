@@ -100,6 +100,7 @@ FWCycleScrollView.cycleImage(imageUrlStrArray: netAdArray,
 ## 效果：
 
 ![](https://github.com/choiceyou/FWCycleScrollView/blob/master/%E6%95%88%E6%9E%9C/%E6%95%88%E6%9E%9C1.gif)
+![](https://github.com/choiceyou/FWCycleScrollView/blob/master/%E6%95%88%E6%9E%9C/%E6%95%88%E6%9E%9C2.gif)
 
 
 
