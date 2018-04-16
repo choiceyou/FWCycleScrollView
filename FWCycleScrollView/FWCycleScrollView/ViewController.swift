@@ -179,7 +179,6 @@ class ViewController: UIViewController {
     lazy var cycleScrollView9: FWCycleScrollView = {
         
         let cycleScrollView = FWCycleScrollView.cycle(frame: CGRect(x: 0, y: self.cycleScrollView8.frame.maxY + 20, width: self.view.frame.width, height: self.view.frame.width/2 + 30), loopTimes: 1)
-        cycleScrollView.viewArray = self.setupCustomSubView(subViewType: 1)
         cycleScrollView.currentPageDotEnlargeTimes = 1.0
         cycleScrollView.customDotViewType = .hollow
         cycleScrollView.pageDotColor = UIColor.red
@@ -204,6 +203,9 @@ class ViewController: UIViewController {
         self.scrollView.addSubview(self.cycleScrollView6)
         self.scrollView.addSubview(self.cycleScrollView7)
         self.scrollView.addSubview(self.cycleScrollView8)
+        
+        // 演示后设置数据
+        self.cycleScrollView9.viewArray = self.setupCustomSubView(subViewType: 1)
         self.scrollView.addSubview(self.cycleScrollView9)
         
         self.scrollView.contentSize = CGSize(width: self.view.bounds.width, height: self.cycleScrollView9.frame.maxY + 20)
