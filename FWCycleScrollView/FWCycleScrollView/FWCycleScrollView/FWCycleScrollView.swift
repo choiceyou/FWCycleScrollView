@@ -155,10 +155,15 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
     /// 传入的资源
     private var sourceArray: [AnyObject]? {
         didSet {
-            self.collectionView.reloadData()
-            self.pageControlType = .classic
-            self.autoScroll = true
-            self.layoutIfNeeded()
+            if sourceArray != nil && sourceArray!.count > 0 {
+                self.collectionView.reloadData()
+                self.setupPageControl()
+                self.invalidateTimer()
+                if autoScroll {
+                    self.setupTimer()
+                }
+                self.layoutIfNeeded()
+            }
         }
     }
     
@@ -381,6 +386,9 @@ extension FWCycleScrollView {
 extension FWCycleScrollView {
     
     private func setupPageControl() {
+        if self.sourceArray == nil {
+            return
+        }
         if self.pageControl != nil {
             self.pageControl?.removeFromSuperview()
         }
