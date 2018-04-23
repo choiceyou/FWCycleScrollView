@@ -66,15 +66,19 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
     /// 外部传入的本地图片
     @objc public var localizationImageNameArray: [String]? {
         didSet {
-            self.collectionView.register(FWUIImageViewCell.self, forCellWithReuseIdentifier: kImageViewCellId)
-            self.sourceArray = localizationImageNameArray as [AnyObject]?
+            if localizationImageNameArray != nil {
+                self.collectionView.register(FWUIImageViewCell.self, forCellWithReuseIdentifier: kImageViewCellId)
+                self.sourceArray = localizationImageNameArray as [AnyObject]?
+            }
         }
     }
     /// 外部传入的网络图片URL
     @objc public var imageUrlStrArray: [String]? {
         didSet {
-            self.collectionView.register(FWUIImageViewCell.self, forCellWithReuseIdentifier: kImageViewCellId)
-            self.sourceArray = imageUrlStrArray as [AnyObject]?
+            if imageUrlStrArray != nil {
+                self.collectionView.register(FWUIImageViewCell.self, forCellWithReuseIdentifier: kImageViewCellId)
+                self.sourceArray = imageUrlStrArray as [AnyObject]?
+            }
         }
     }
     /// 网络图片预加载图片
@@ -82,8 +86,10 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
     /// 外部传入的自定义UI
     @objc public var viewArray: [UIView]? {
         didSet {
-            self.collectionView.register(FWUIviewCell.self, forCellWithReuseIdentifier: kViewCellId)
-            self.sourceArray = viewArray as [AnyObject]?
+            if viewArray != nil {
+                self.collectionView.register(FWUIviewCell.self, forCellWithReuseIdentifier: kViewCellId)
+                self.sourceArray = viewArray as [AnyObject]?
+            }
         }
     }
     
