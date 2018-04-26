@@ -15,6 +15,12 @@ pod 'FWCycleScrollView'
 
 
 
+## 更新记录：
+1、v2.0.5：
+- 修复v2.0.4中设置自定义分页控件无效的问题；
+
+
+
 ## 可设置参数：
 ```参数
 /// 本地图片
@@ -106,6 +112,6 @@ FWCycleScrollView.cycleImage(imageUrlStrArray: netAdArray,
 
 ## 结尾语：
 
-> * 使用过程中有任何问题或者新的需求都可以issues我哦；
-> * 欢迎关注本人更多的UI库，谢谢；
+- 使用过程中发现bug请issues或（QQ群：670698309）；
+- 有新的需求欢迎提出；
 
