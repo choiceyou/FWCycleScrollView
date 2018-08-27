@@ -580,7 +580,7 @@ extension FWCycleScrollView {
     
     public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         
-        if self.sourceCount == 0 || self.pageControl == nil {
+        if self.sourceCount == 0 {
             return
         }
         
