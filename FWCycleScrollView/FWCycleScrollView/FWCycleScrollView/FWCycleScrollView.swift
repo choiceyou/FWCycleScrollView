@@ -218,14 +218,13 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
     private lazy var collectionView: UICollectionView = {
         
         let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: self.collectionViewFlowLayout)
-        collectionView.backgroundColor = UIColor.white
         collectionView.isPagingEnabled = true
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.scrollsToTop = false
-        collectionView.backgroundColor = UIColor.white
+        collectionView.backgroundColor = UIColor.clear
         collectionView.bounces = false
         self.addSubview(collectionView)
         return collectionView

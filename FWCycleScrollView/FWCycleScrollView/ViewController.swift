@@ -115,7 +115,7 @@ class ViewController: UIViewController {
         return cycleScrollView
     }()
     
-    /// 例六：轮播自定义视图
+    /// 例六：轮播自定义视图 注意：当需要轮播的数据源小于或者等于1
     lazy var cycleScrollView6: FWCycleScrollView = {
         
         let customViewArray = [self.setupUIView(index: 0),
@@ -149,6 +149,7 @@ class ViewController: UIViewController {
                                self.setupUIView2(index: 4)]
         
         let cycleScrollView = FWCycleScrollView.cycleView(viewArray: customViewArray, frame:  CGRect(x: 0, y: self.cycleScrollView6.frame.maxY + 20, width: self.view.frame.width, height: 30))
+        cycleScrollView.backgroundColor = UIColor.yellow
         cycleScrollView.pageControlType = .none
         cycleScrollView.scrollDirection = .vertical
         cycleScrollView.autoScrollTimeInterval = 2.0
