@@ -170,11 +170,10 @@ class ViewController: UIViewController {
         return cycleScrollView
     }()
     
-    /// 例八：仿直播间礼物列表
+    /// 例八：仿直播间礼物列表，viewArray.count > 2 时可循环轮播
     lazy var cycleScrollView8: FWCycleScrollView = {
         
-        let cycleScrollView = FWCycleScrollView.cycle(frame: CGRect(x: 0, y: self.cycleScrollView7.frame.maxY + 20, width: self.view.frame.width, height: self.view.frame.width/2 + 30), loopTimes: 1)
-        cycleScrollView.viewArray = self.setupCustomSubView(subViewType: 0)
+        let cycleScrollView = FWCycleScrollView.cycleView(viewArray: self.setupCustomSubView(subViewType: 0), frame: CGRect(x: 0, y: self.cycleScrollView7.frame.maxY + 20, width: self.view.frame.width, height: self.view.frame.width/2 + 30))
         cycleScrollView.currentPageDotEnlargeTimes = 1.0
         cycleScrollView.customDotViewType = .hollow
         cycleScrollView.pageDotColor = UIColor.red
@@ -184,7 +183,7 @@ class ViewController: UIViewController {
         return cycleScrollView
     }()
     
-    /// 例九：仿产品分类列表
+    /// 例九：仿产品分类列表，只能单次轮播
     lazy var cycleScrollView9: FWCycleScrollView = {
         
         let cycleScrollView = FWCycleScrollView.cycle(frame: CGRect(x: 0, y: self.cycleScrollView8.frame.maxY + 20, width: self.view.frame.width, height: self.view.frame.width/2 + 30), loopTimes: 1)

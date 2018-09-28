@@ -61,7 +61,7 @@ public typealias ItemDidScrollBlock = (_ currentIndex: Int) -> Void
 public typealias ItemDidClickedBlock = (_ currentIndex: Int) -> Void
 
 /// 轮播轮回次数的默认值
-private let loopTimesDefault = 100
+private var loopTimesDefault = 100
 
 
 open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -124,8 +124,12 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
     
     /// 分页控件
     private var pageControl: UIControl?
+    
     /// 轮播轮回次数，注意：当loopTimes>1时，是无限循环轮播的（1个轮回指的是1组UI轮播完成）
     private var loopTimes = loopTimesDefault
+    /// 记录轮播轮回次数的原始值
+    private var loopTimesOrigin = loopTimesDefault
+    
     /// 轮播图滚动方向
     @objc public var scrollDirection: UICollectionViewScrollDirection = .horizontal
     /// 选中分页控件的颜色
@@ -318,6 +322,7 @@ extension FWCycleScrollView {
         let cycleScrollView = FWCycleScrollView(frame: frame)
         cycleScrollView.setupUI(localizationImageNameArray: nil, imageUrlStrArray: nil, placeholderImage: nil, viewArray: nil)
         cycleScrollView.loopTimes = loopTimes
+        cycleScrollView.loopTimesOrigin = loopTimes
         return cycleScrollView
     }
     
@@ -486,7 +491,7 @@ extension FWCycleScrollView {
             if ((self.viewArray != nil) && self.viewArray!.count <= 2) {
                 self.loopTimes = 1
             } else {
-                self.loopTimes = loopTimesDefault
+                self.loopTimes = loopTimesOrigin
             }
             self.rollTimer = Timer.scheduledTimer(timeInterval: self.autoScrollTimeInterval, target: self, selector: #selector(automaticScroll), userInfo: nil, repeats: true)
             RunLoop.main.add(self.rollTimer!, forMode: .commonModes)
