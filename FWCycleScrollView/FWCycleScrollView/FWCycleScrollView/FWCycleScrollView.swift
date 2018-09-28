@@ -60,6 +60,9 @@ public typealias ItemDidScrollBlock = (_ currentIndex: Int) -> Void
 /// 某一项点击回调
 public typealias ItemDidClickedBlock = (_ currentIndex: Int) -> Void
 
+/// 轮播轮回次数的默认值
+private let loopTimesDefault = 100
+
 
 open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -83,7 +86,14 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
     }
     /// 网络图片预加载图片
     @objc public var placeholderImage: UIImage?
-    /// 外部传入的自定义UI
+    
+    /**
+     外部传入的自定义UI
+     注意：
+     1、当自定义UI数量 =1 时，UICollectionView的复用机制导致轮播会出现问题，因此此时不支持轮播；
+     2、当自定义UI数量 =2 时，UICollectionView的复用机制导致轮播会出现问题，因此此时只支持上下重复轮播；
+     3、当自定义UI数量 >2 时，不受限制；
+     */
     @objc public var viewArray: [UIView]? {
         didSet {
             if viewArray != nil {
@@ -115,7 +125,7 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
     /// 分页控件
     private var pageControl: UIControl?
     /// 轮播轮回次数，注意：当loopTimes>1时，是无限循环轮播的（1个轮回指的是1组UI轮播完成）
-    private var loopTimes = 100
+    private var loopTimes = loopTimesDefault
     /// 轮播图滚动方向
     @objc public var scrollDirection: UICollectionViewScrollDirection = .horizontal
     /// 选中分页控件的颜色
@@ -473,6 +483,11 @@ extension FWCycleScrollView {
         self.invalidateTimer()
         
         if self.autoScroll {
+            if ((self.viewArray != nil) && self.viewArray!.count <= 2) {
+                self.loopTimes = 1
+            } else {
+                self.loopTimes = loopTimesDefault
+            }
             self.rollTimer = Timer.scheduledTimer(timeInterval: self.autoScrollTimeInterval, target: self, selector: #selector(automaticScroll), userInfo: nil, repeats: true)
             RunLoop.main.add(self.rollTimer!, forMode: .commonModes)
         }
@@ -530,7 +545,9 @@ extension FWCycleScrollView {
         }
         
         if targetIndex >= self.totalItemsCount {
-            if self.loopTimes > 0 {
+            if self.loopTimes == 1 {
+                self.startScrollToItem(targetIndex: 0, animated: true)
+            } else if self.loopTimes > 1 {
                 targetIndex = self.totalItemsCount / 2
                 self.startScrollToItem(targetIndex: targetIndex, animated: false)
             }

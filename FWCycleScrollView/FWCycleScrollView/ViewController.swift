@@ -115,6 +115,14 @@ class ViewController: UIViewController {
         return cycleScrollView
     }()
     
+    
+    /**
+     自定义视图注意点：
+     1、当自定义UI数量 =1 时，UICollectionView的复用机制导致轮播会出现问题，因此此时不支持轮播；
+     2、当自定义UI数量 =2 时，UICollectionView的复用机制导致轮播会出现问题，因此此时只支持上下重复轮播；
+     3、当自定义UI数量 >2 时，不受限制；
+     */
+    
     /// 例六：轮播自定义视图 注意：当需要轮播的数据源小于或者等于1
     lazy var cycleScrollView6: FWCycleScrollView = {
         
