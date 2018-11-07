@@ -71,6 +71,13 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
         didSet {
             if localizationImageNameArray != nil {
                 self.collectionView.register(FWUIImageViewCell.self, forCellWithReuseIdentifier: kImageViewCellId)
+                
+                if self.imageUrlStrArray != nil {
+                    self.imageUrlStrArray = nil
+                }
+                if self.viewArray != nil {
+                    self.viewArray = nil
+                }
                 self.sourceArray = localizationImageNameArray as [AnyObject]?
             }
         }
@@ -80,6 +87,13 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
         didSet {
             if imageUrlStrArray != nil {
                 self.collectionView.register(FWUIImageViewCell.self, forCellWithReuseIdentifier: kImageViewCellId)
+                
+                if self.localizationImageNameArray != nil {
+                    self.localizationImageNameArray = nil
+                }
+                if self.viewArray != nil {
+                    self.viewArray = nil
+                }
                 self.sourceArray = imageUrlStrArray as [AnyObject]?
             }
         }
@@ -98,6 +112,13 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
         didSet {
             if viewArray != nil {
                 self.collectionView.register(FWUIviewCell.self, forCellWithReuseIdentifier: kViewCellId)
+                
+                if self.imageUrlStrArray != nil {
+                    self.imageUrlStrArray = nil
+                }
+                if self.localizationImageNameArray != nil {
+                    self.localizationImageNameArray = nil
+                }
                 self.sourceArray = viewArray as [AnyObject]?
             }
         }
