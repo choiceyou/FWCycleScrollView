@@ -176,6 +176,9 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
         }
     }
     
+    /// 图片ContentMode
+    private var myContentMode: UIView.ContentMode = .scaleToFill
+    
     /// 某一项滚动回调
     @objc public var itemDidScrollBlock: ItemDidScrollBlock?
     /// 某一项点击回调
@@ -303,6 +306,27 @@ extension FWCycleScrollView {
     
     /// 类初始化方法
     ///
+    /// - Parameters:
+    ///   - frame: FWCycleScrollView的大小
+    ///   - localizationImageNameArray: 本地图片名称
+    ///   - imageUrlStrArray: 网络图片URL地址
+    ///   - placeholderImage: 预加载图片
+    ///   - viewArray: 自定义UI等
+    ///   - loopTimes: 轮播轮回次数，注意：当loopTimes>1时，是无限循环轮播的（1个轮回指的是1组UI轮播完成）
+    ///   - contentMode: 图片ContentMode
+    /// - Returns: self
+    @objc open class func cycleAll(frame: CGRect, localizationImageNameArray: [String]?, imageUrlStrArray: [String]?, placeholderImage: UIImage?, viewArray: [UIView]?, loopTimes: Int, contentMode: ContentMode) -> FWCycleScrollView {
+        
+        let cycleScrollView = FWCycleScrollView(frame: frame)
+        cycleScrollView.setupUI(localizationImageNameArray: localizationImageNameArray, imageUrlStrArray: imageUrlStrArray, placeholderImage: placeholderImage, viewArray: viewArray)
+        cycleScrollView.loopTimes = loopTimes
+        cycleScrollView.loopTimesOrigin = loopTimes
+        cycleScrollView.myContentMode = contentMode
+        return cycleScrollView
+    }
+    
+    /// 类初始化方法
+    ///
     /// - Parameter frame: FWCycleScrollView的大小
     /// - Returns: self
     @objc open class func cycle(frame: CGRect) -> FWCycleScrollView {
@@ -366,6 +390,7 @@ extension FWCycleScrollView {
         return cycleScrollView
     }
     
+    
     private func setupUI(localizationImageNameArray: [String]?, imageUrlStrArray: [String]?, placeholderImage: UIImage?, viewArray: [UIView]?) {
         self.localizationImageNameArray = localizationImageNameArray
         self.imageUrlStrArray = imageUrlStrArray
@@ -396,7 +421,7 @@ extension FWCycleScrollView {
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if self.imageUrlStrArray != nil || self.localizationImageNameArray != nil {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kImageViewCellId, for: indexPath) as! FWUIImageViewCell
-            cell.setupUI(imageName: (self.localizationImageNameArray != nil) ? self.localizationImageNameArray![(indexPath.row % self.localizationImageNameArray!.count)] : nil, imageUrl: (self.imageUrlStrArray != nil) ? self.imageUrlStrArray![(indexPath.row % self.imageUrlStrArray!.count)] : nil, placeholderImage: self.placeholderImage)
+            cell.setupUI(imageName: (self.localizationImageNameArray != nil) ? self.localizationImageNameArray![(indexPath.row % self.localizationImageNameArray!.count)] : nil, imageUrl: (self.imageUrlStrArray != nil) ? self.imageUrlStrArray![(indexPath.row % self.imageUrlStrArray!.count)] : nil, placeholderImage: self.placeholderImage, contentMode: self.myContentMode)
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kViewCellId, for: indexPath) as! FWUIviewCell

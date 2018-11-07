@@ -30,7 +30,6 @@ class FWUIImageViewCell: UICollectionViewCell {
         self.backgroundColor = UIColor.white
         
         self.imageView.frame = self.bounds
-        self.imageView.contentMode = .scaleToFill
         self.addSubview(self.imageView)
     }
     
@@ -38,7 +37,9 @@ class FWUIImageViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupUI(imageName: String?, imageUrl: String?, placeholderImage: UIImage?) {
+    func setupUI(imageName: String?, imageUrl: String?, placeholderImage: UIImage?, contentMode: ContentMode) {
+        
+        self.imageView.contentMode = contentMode
         
         if imageName != nil {
             self.imageView.image = UIImage(named: imageName!)

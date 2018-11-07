@@ -40,7 +40,8 @@ class ViewController: UIViewController {
     
     /// 例二：点击广告位回调、纵向滚动、自定义分页控件
     lazy var cycleScrollView2: FWCycleScrollView = {
-        let cycleScrollView = FWCycleScrollView.cycleImage(imageUrlStrArray: netAdArray, placeholderImage: UIImage(named: "ad_placeholder"), frame: CGRect(x: 0, y: self.cycleScrollView1.frame.maxY + 20, width: self.view.frame.width, height: 140))
+        
+        let cycleScrollView = FWCycleScrollView.cycleAll(frame: CGRect(x: 0, y: self.cycleScrollView1.frame.maxY + 20, width: self.view.frame.width, height: 140), localizationImageNameArray: nil, imageUrlStrArray: netAdArray, placeholderImage: UIImage(named: "ad_placeholder"), viewArray: nil, loopTimes: 100, contentMode: .scaleAspectFit)
         
         cycleScrollView.autoScrollTimeInterval = 2.0
         
