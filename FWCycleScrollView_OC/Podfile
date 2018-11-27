@@ -7,6 +7,4 @@ target 'FWCycleScrollView_OC' do
     
     pod 'FWCycleScrollView'
     
-    #    pod 'Alamofire'
-    
 end

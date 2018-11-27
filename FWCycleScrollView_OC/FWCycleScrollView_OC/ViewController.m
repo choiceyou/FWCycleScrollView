@@ -48,7 +48,7 @@
     
     
     // 例二：点击广告位回调、纵向滚动、自定义分页控件
-    FWCycleScrollView *cycleScrollView2 = [FWCycleScrollView cycleImageWithImageUrlStrArray:netAdArray placeholderImage:[UIImage imageNamed:@"ad_placeholder"] frame:CGRectMake(0, CGRectGetMaxY(cycleScrollView1.frame) + 20, self.view.frame.size.width, 140)];
+    FWCycleScrollView *cycleScrollView2 = [FWCycleScrollView cycleAllWithFrame:CGRectMake(0, CGRectGetMaxY(cycleScrollView1.frame) + 20, self.view.frame.size.width, 140) localizationImageNameArray:nil imageUrlStrArray:netAdArray placeholderImage:[UIImage imageNamed:@"ad_placeholder"] viewArray:nil loopTimes:100 contentMode:UIViewContentModeScaleAspectFit];
     
     cycleScrollView2.autoScrollTimeInterval = 2.0;
     

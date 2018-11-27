@@ -9,9 +9,16 @@
 ## 支持pod导入：
 
 ```cocoaPods
+use_frameworks!
 pod 'FWCycleScrollView'
 注意：如出现 Unable to find a specification for 'FWCycleScrollView' 错误，可执行 pod repo update 命令。
 ```
+
+
+
+## 更新记录：
+1、v2.0.5：
+- 修复v2.0.4中设置自定义分页控件无效的问题；
 
 
 
@@ -106,6 +113,6 @@ FWCycleScrollView.cycleImage(imageUrlStrArray: netAdArray,
 
 ## 结尾语：
 
-> * 使用过程中有任何问题或者新的需求都可以issues我哦；
-> * 欢迎关注本人更多的UI库，谢谢；
+- 使用过程中发现bug请issues或加入FW问题反馈群：670698309（此群只接受FW相关组件问题）；
+- 有新的需求欢迎提出；
 

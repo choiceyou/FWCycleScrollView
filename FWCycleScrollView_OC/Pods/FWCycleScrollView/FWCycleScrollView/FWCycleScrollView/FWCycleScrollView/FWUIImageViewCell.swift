@@ -6,6 +6,16 @@
 //  Copyright © 2018年 xfg. All rights reserved.
 //
 
+
+/** ************************************************
+ 
+ github地址：https://github.com/choiceyou/FWCycleScrollView
+ bug反馈、交流群：670698309
+ 
+ ***************************************************
+ */
+
+
 import Foundation
 import UIKit
 import Kingfisher
@@ -20,7 +30,6 @@ class FWUIImageViewCell: UICollectionViewCell {
         self.backgroundColor = UIColor.white
         
         self.imageView.frame = self.bounds
-        self.imageView.contentMode = .scaleToFill
         self.addSubview(self.imageView)
     }
     
@@ -28,7 +37,9 @@ class FWUIImageViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupUI(imageName: String?, imageUrl: String?, placeholderImage: UIImage?) {
+    func setupUI(imageName: String?, imageUrl: String?, placeholderImage: UIImage?, contentMode: ContentMode) {
+        
+        self.imageView.contentMode = contentMode
         
         if imageName != nil {
             self.imageView.image = UIImage(named: imageName!)
