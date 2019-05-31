@@ -446,7 +446,10 @@ extension FWCycleScrollView {
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kViewCellId, for: indexPath) as! FWUIviewCell
-            cell.addSubview(self.viewArray![(indexPath.row % self.viewArray!.count)])
+            for subView in cell.contentView.subviews {
+                subView.removeFromSuperview()
+            }
+            cell.contentView.addSubview(self.viewArray![(indexPath.row % self.viewArray!.count)])
             return cell
         }
     }

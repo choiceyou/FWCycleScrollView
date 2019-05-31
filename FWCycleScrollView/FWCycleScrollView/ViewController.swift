@@ -151,11 +151,11 @@ class ViewController: UIViewController {
     /// 例七：轮播自定义视图
     lazy var cycleScrollView7: FWCycleScrollView = {
         
-        let customViewArray = [self.setupUIView2(index: 0),
-                               self.setupUIView2(index: 1),
-                               self.setupUIView2(index: 2),
-                               self.setupUIView2(index: 3),
-                               self.setupUIView2(index: 4)]
+        let customViewArray = [self.setupUIView2(index: 0, title: ""),
+                               self.setupUIView2(index: 1, title: ""),
+                               self.setupUIView2(index: 2, title: ""),
+                               self.setupUIView2(index: 3, title: ""),
+                               self.setupUIView2(index: 4, title: "")]
         
         let cycleScrollView = FWCycleScrollView.cycleView(viewArray: customViewArray, frame:  CGRect(x: 0, y: self.cycleScrollView6.frame.maxY + 20, width: self.view.frame.width, height: 30))
         cycleScrollView.backgroundColor = UIColor.yellow
@@ -233,12 +233,16 @@ extension ViewController {
         return label
     }
     
-    func setupUIView2(index: Int) -> UILabel {
+    func setupUIView2(index: Int, title: String) -> UILabel {
         
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 30))
         label.backgroundColor = UIColor.white
         label.textColor = UIColor.black
-        label.text = "第 \(index + 1) 张自定义视图"
+        if title.isEmpty {
+            label.text = "第 \(index + 1) 张自定义视图"
+        } else {
+            label.text = title
+        }
         return label
     }
     
