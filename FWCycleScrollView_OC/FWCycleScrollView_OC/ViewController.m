@@ -33,10 +33,10 @@
     NSArray *adArray3 = @[@"ad_5", @"ad_6", @"ad_7"];
     NSArray *adArray4 = @[@"ad_1", @"ad_2", @"ad_3", @"ad_4", @"ad_5", @"ad_6", @"ad_7"];
     
-    NSArray *netAdArray = @[@"http://pic2.16pic.com/00/10/46/16pic_1046407_b.jpg",
-                            @"http://pic.58pic.com/58pic/14/34/62/39S58PIC9jV_1024.jpg",
-                            @"http://pic.qiantucdn.com/58pic/17/70/72/02U58PICKVg_1024.jpg",
-                            @"http://pic.58pic.com/58pic/16/73/95/63E58PICQh7_1024.jpg"
+    NSArray *netAdArray = @[@"https://raw.githubusercontent.com/choiceyou/FWCycleScrollView/master/demo_image/1.jpeg",
+                            @"https://raw.githubusercontent.com/choiceyou/FWCycleScrollView/master/demo_image/2.jpeg",
+                            @"https://raw.githubusercontent.com/choiceyou/FWCycleScrollView/master/demo_image/3.jpeg",
+                            @"https://raw.githubusercontent.com/choiceyou/FWCycleScrollView/master/demo_image/4.jpeg",
                             ];
     
     // 例一：简单使用、默认分页控件
