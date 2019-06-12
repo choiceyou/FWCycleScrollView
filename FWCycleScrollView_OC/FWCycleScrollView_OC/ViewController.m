@@ -30,7 +30,6 @@
     
     
     NSArray *adArray = @[@"ad_1", @"ad_2", @"ad_3"];
-    NSArray *adArray2 = @[@"ad_4", @"ad_5", @"ad_6"];
     NSArray *adArray3 = @[@"ad_5", @"ad_6", @"ad_7"];
     NSArray *adArray4 = @[@"ad_1", @"ad_2", @"ad_3", @"ad_4", @"ad_5", @"ad_6", @"ad_7"];
     
@@ -214,13 +213,20 @@
     return label;
 }
 
-- (UIView *)setupUIView3:(int)index frame:(CGRect)frame
+- (void)btnAction:(id)sender
 {
-    UIView *view = [[UIView alloc] initWithFrame:frame];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"gift_%d",index%20]]];
-    imageView.center = CGPointMake(view.frame.size.width / 2, view.frame.size.height / 2);
-    [view addSubview:imageView];
-    return view;
+    UIButton *btn = (UIButton *)sender;
+    NSLog(@"当前点击了第 %ld 项", (long)btn.tag);
+}
+
+- (UIButton *)setupUIView3:(int)index frame:(CGRect)frame
+{
+    UIButton *imageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    imageBtn.frame = frame;
+    imageBtn.tag = index;
+    [imageBtn setImage:[UIImage imageNamed:[NSString stringWithFormat:@"gift_%d",index%20]] forState:UIControlStateNormal];
+    [imageBtn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
+    return imageBtn;
 }
 
 - (UIView *)setupUIView4:(int)index frame:(CGRect)frame
@@ -253,7 +259,7 @@
     int tmpW = self.view.frame.size.width / horizontalRow;
     int tmpH = self.view.frame.size.width / 2 / verticalRow;
     
-    UIView *viewContrainer = nil;
+    UIView *viewContainer = nil;
     NSMutableArray *customSubViewArray = [NSMutableArray array];
     
     for (int i=0; i<30; i++) {
@@ -264,16 +270,16 @@
             tmpY = tmpH;
         }
         
-        if (viewContrainer == nil || (i % (horizontalRow * verticalRow) == 0)) {
-            viewContrainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width /2 + 30)];
-            viewContrainer.backgroundColor = UIColor.whiteColor;
-            [customSubViewArray addObject:viewContrainer];
+        if (viewContainer == nil || (i % (horizontalRow * verticalRow) == 0)) {
+            viewContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width /2 + 30)];
+            viewContainer.backgroundColor = UIColor.whiteColor;
+            [customSubViewArray addObject:viewContainer];
         }
         
         if (subViewType == 0) {
-            [viewContrainer addSubview:[self setupUIView3:i frame:CGRectMake(tmpX, tmpY, tmpW, tmpH)]];
+            [viewContainer addSubview:[self setupUIView3:i frame:CGRectMake(tmpX, tmpY, tmpW, tmpH)]];
         } else {
-            [viewContrainer addSubview:[self setupUIView4:i frame:CGRectMake(tmpX, tmpY, tmpW, tmpH)]];
+            [viewContainer addSubview:[self setupUIView4:i frame:CGRectMake(tmpX, tmpY, tmpW, tmpH)]];
         }
     }
     return customSubViewArray;
