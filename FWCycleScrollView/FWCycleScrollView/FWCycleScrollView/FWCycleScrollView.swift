@@ -210,6 +210,14 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
     private var sourceArray: [AnyObject]? {
         didSet {
             if sourceArray != nil && sourceArray!.count > 0 {
+                let currentIndex = self.currentIndex()
+                if currentIndex != 0 {
+                    var row: Int = 0
+                    if currentIndex > sourceArray!.count {
+                        row = currentIndex - currentIndex % sourceArray!.count
+                    }
+                    self.collectionView.scrollToItem(at: IndexPath(row: row, section: 0), at: UICollectionViewScrollPosition.left, animated: false)
+                }
                 self.collectionView.reloadData()
                 self.setupPageControl()
                 self.invalidateTimer()
