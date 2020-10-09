@@ -292,7 +292,7 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
                 targetIndex = self.totalItemsCount / 2
             }
             if self.collectionView.numberOfItems(inSection: 0) == self.totalItemsCount && self.loopTimes > 1 {
-                self.startScrollToItem(targetIndex: targetIndex, animated: true)
+                self.startScrollToItem(targetIndex: targetIndex, animated: false)
             }
         }
         
