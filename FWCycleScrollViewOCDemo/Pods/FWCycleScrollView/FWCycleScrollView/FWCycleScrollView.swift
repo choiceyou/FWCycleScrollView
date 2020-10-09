@@ -197,6 +197,9 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
         }
     }
     
+    /// Cell的背景颜色
+    @objc public var cellCackgroundColor = UIColor.white
+    
     /// 图片ContentMode
     private var myContentMode: UIView.ContentMode = .scaleToFill
     
@@ -210,6 +213,14 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
     private var sourceArray: [AnyObject]? {
         didSet {
             if sourceArray != nil && sourceArray!.count > 0 {
+                let currentIndex = self.currentIndex()
+                if currentIndex != 0 {
+                    var row: Int = 0
+                    if currentIndex > sourceArray!.count {
+                        row = currentIndex - currentIndex % sourceArray!.count
+                    }
+                    self.collectionView.scrollToItem(at: IndexPath(row: row, section: 0), at: UICollectionViewScrollPosition.left, animated: false)
+                }
                 self.collectionView.reloadData()
                 self.setupPageControl()
                 self.invalidateTimer()
@@ -281,7 +292,7 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
                 targetIndex = self.totalItemsCount / 2
             }
             if self.collectionView.numberOfItems(inSection: 0) == self.totalItemsCount && self.loopTimes > 1 {
-                self.startScrollToItem(targetIndex: targetIndex, animated: true)
+                self.startScrollToItem(targetIndex: targetIndex, animated: false)
             }
         }
         
@@ -443,10 +454,15 @@ extension FWCycleScrollView {
         if self.imageUrlStrArray != nil || self.localizationImageNameArray != nil {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kImageViewCellId, for: indexPath) as! FWUIImageViewCell
             cell.setupUI(imageName: (self.localizationImageNameArray != nil) ? self.localizationImageNameArray![(indexPath.row % self.localizationImageNameArray!.count)] : nil, imageUrl: (self.imageUrlStrArray != nil) ? self.imageUrlStrArray![(indexPath.row % self.imageUrlStrArray!.count)] : nil, placeholderImage: self.placeholderImage, contentMode: self.myContentMode)
+            cell.backgroundColor = self.cellCackgroundColor
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kViewCellId, for: indexPath) as! FWUIviewCell
-            cell.addSubview(self.viewArray![(indexPath.row % self.viewArray!.count)])
+            for subView in cell.contentView.subviews {
+                subView.removeFromSuperview()
+            }
+            cell.contentView.addSubview(self.viewArray![(indexPath.row % self.viewArray!.count)])
+            cell.backgroundColor = self.cellCackgroundColor
             return cell
         }
     }

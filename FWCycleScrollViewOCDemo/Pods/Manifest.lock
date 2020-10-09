@@ -1,5 +1,5 @@
 PODS:
-  - FWCycleScrollView (2.1.0):
+  - FWCycleScrollView (2.1.4):
     - Kingfisher
   - Kingfisher (4.10.1)
 
@@ -7,14 +7,14 @@ DEPENDENCIES:
   - FWCycleScrollView
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - FWCycleScrollView
     - Kingfisher
 
 SPEC CHECKSUMS:
-  FWCycleScrollView: ce44124ec1655b52af95a500fe96fbd7a8a8531d
+  FWCycleScrollView: c09d78a405068a834caf72c1d996014d79bf2f65
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
 
 PODFILE CHECKSUM: ed5afe8113e739bbf23a5efbf5003c44d4e9be49
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.9.3

@@ -171,7 +171,7 @@
 				490FB7E32073852900B5D595 /* Sources */,
 				490FB7E42073852900B5D595 /* Frameworks */,
 				490FB7E52073852900B5D595 /* Resources */,
-				1A5CCEA26451B0626A860265 /* [CP] Embed Pods Frameworks */,
+				1A4F561FE5E06AF7C421D71E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -291,13 +291,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1A5CCEA26451B0626A860265 /* [CP] Embed Pods Frameworks */ = {
+		1A4F561FE5E06AF7C421D71E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-FWCycleScrollView_OC/Pods-FWCycleScrollView_OC-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-FWCycleScrollView_OC/Pods-FWCycleScrollView_OC-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/FWCycleScrollView/FWCycleScrollView.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 			);
@@ -308,7 +308,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FWCycleScrollView_OC/Pods-FWCycleScrollView_OC-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FWCycleScrollView_OC/Pods-FWCycleScrollView_OC-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A32B068EA14A8D8E00027A9A /* [CP] Check Pods Manifest.lock */ = {
