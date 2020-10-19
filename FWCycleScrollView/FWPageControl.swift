@@ -139,12 +139,8 @@ extension FWPageControl {
     }
     
     private func changeActivity(active: Bool, index: Int) {
-        var tmpIndex = index
-        if tmpIndex > 0 && tmpIndex >= self.dotViewArray.count {
-            tmpIndex = self.dotViewArray.count - 1
-        }
-        if self.dotViewArray.count > tmpIndex {
-            let customDotView: FWCustomDotView = self.dotViewArray[tmpIndex]
+        if index >= 0 && self.dotViewArray.count > index {
+            let customDotView: FWCustomDotView = self.dotViewArray[index]
             customDotView.changeActivityState(active: active)
         }
     }
