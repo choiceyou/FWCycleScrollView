@@ -143,8 +143,10 @@ extension FWPageControl {
         if tmpIndex > 0 && tmpIndex >= self.dotViewArray.count {
             tmpIndex = self.dotViewArray.count - 1
         }
-        let customDotView: FWCustomDotView = self.dotViewArray[tmpIndex]
-        customDotView.changeActivityState(active: active)
+        if self.dotViewArray.count > tmpIndex {
+            let customDotView: FWCustomDotView = self.dotViewArray[tmpIndex]
+            customDotView.changeActivityState(active: active)
+        }
     }
     
     private func hideForSinglePage() {
