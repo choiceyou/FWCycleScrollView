@@ -152,7 +152,11 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
     private var loopTimesOrigin = loopTimesDefault
     
     /// 轮播图滚动方向
-    @objc public var scrollDirection: UICollectionViewScrollDirection = .horizontal
+    @objc public var scrollDirection: UICollectionViewScrollDirection = .horizontal {
+        didSet {
+            self.collectionViewFlowLayout.scrollDirection = scrollDirection
+        }
+    }
     /// 选中分页控件的颜色
     @objc public var currentPageDotColor = UIColor.white {
         didSet {
@@ -178,7 +182,11 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
         }
     }
     /// 分页控件位置
-    @objc public var pageControlAliment: PageControlAliment = .center
+    @objc public var pageControlAliment: PageControlAliment = .center {
+        didSet {
+            self.setupPageControlFrame()
+        }
+    }
     /// 分页控件Insets值
     @objc public var pageControlInsets: UIEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
     /// 分页控件默认距离的边距
@@ -279,12 +287,12 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
         return collectionView
     }()
     
-    open override func layoutSubviews() {
-        super.layoutSubviews()
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
         
-        self.collectionView.frame = self.bounds
-        self.collectionViewFlowLayout.itemSize = self.frame.size
-        self.collectionViewFlowLayout.scrollDirection = self.scrollDirection
+        self.collectionView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
+        self.collectionViewFlowLayout.itemSize = frame.size
+        self.collectionViewFlowLayout.scrollDirection = scrollDirection
         
         if self.collectionView.contentOffset.x == 0 && self.totalItemsCount > 0 {
             var targetIndex = 0
@@ -296,35 +304,11 @@ open class FWCycleScrollView: UIView, UICollectionViewDelegate, UICollectionView
             }
         }
         
-        if self.pageControl != nil {
-            var pSize = CGSize(width: 0, height: 0)
-            if self.pageControl!.isKind(of: UIPageControl.self) {
-                pSize = CGSize(width: CGFloat(self.sourceCount) * self.pageControlDotSize.width, height: self.pageControlDotSize.height)
-            } else if self.pageControl!.isKind(of: FWPageControl.self) {
-                var tmpW: CGFloat = 0.0
-                var tmpH: CGFloat = 0.0
-                if self.customDotViewType == .image && self.pageDotImage != nil {
-                    tmpW = CGFloat(self.sourceCount) * self.pageDotImage!.size.width + ((self.pageControl as! FWPageControl).spacingBetweenDots * CGFloat((self.sourceCount - 1)))
-                    tmpH = self.pageDotImage!.size.height
-                } else {
-                    tmpW = CGFloat(self.sourceCount) * self.pageControlDotSize.width + ((self.pageControl as! FWPageControl).spacingBetweenDots * CGFloat((self.sourceCount - 1)))
-                    tmpH = self.pageControlDotSize.height
-                }
-                pSize = CGSize(width: tmpW, height: tmpH)
-            }
-            var pX: CGFloat = 0
-            if self.pageControlAliment == .center {
-                pX = (self.frame.width - pSize.width) / 2
-            } else if self.pageControlAliment == .left {
-                pX = pageControlMargin + 10
-            } else if self.pageControlAliment == .right {
-                pX = self.frame.width - pSize.width - (pageControlMargin + 10)
-            }
-            let pY = self.frame.height - pSize.height - pageControlMargin
-            
-            let pageControlFrame = CGRect(x: pX + self.pageControlInsets.left - self.pageControlInsets.right, y: pY + self.pageControlInsets.top - self.pageControlInsets.bottom, width: pSize.width, height: pSize.height)
-            self.pageControl!.frame = pageControlFrame
-        }
+        self.setupPageControlFrame()
+    }
+    
+    required public init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     deinit {
@@ -517,6 +501,46 @@ extension FWCycleScrollView {
             
             self.pageControl = tmpPageControl
         }
+        
+        self.setupPageControlFrame()
+    }
+    
+    private func setupPageControlFrame() {
+        if self.pageControl == nil {
+            return
+        }
+        
+        var pSize = CGSize(width: 0, height: 0)
+        if self.pageControl!.isKind(of: UIPageControl.self) {
+            if #available(iOS 14.0, *) {
+                pSize = CGSize(width: CGFloat(self.sourceCount) * self.pageControlDotSize.width + (CGFloat(self.sourceCount) - 1) * 20 + 100, height: self.pageControlDotSize.height)
+            } else {
+                pSize = CGSize(width: CGFloat(self.sourceCount) * self.pageControlDotSize.width, height: self.pageControlDotSize.height)
+            }
+        } else if self.pageControl!.isKind(of: FWPageControl.self) {
+            var tmpW: CGFloat = 0.0
+            var tmpH: CGFloat = 0.0
+            if self.customDotViewType == .image && self.pageDotImage != nil {
+                tmpW = CGFloat(self.sourceCount) * self.pageDotImage!.size.width + ((self.pageControl as! FWPageControl).spacingBetweenDots * CGFloat((self.sourceCount - 1)))
+                tmpH = self.pageDotImage!.size.height
+            } else {
+                tmpW = CGFloat(self.sourceCount) * self.pageControlDotSize.width + ((self.pageControl as! FWPageControl).spacingBetweenDots * CGFloat((self.sourceCount - 1)))
+                tmpH = self.pageControlDotSize.height
+            }
+            pSize = CGSize(width: tmpW, height: tmpH)
+        }
+        var pX: CGFloat = 0
+        if self.pageControlAliment == .center {
+            pX = (self.frame.width - pSize.width) / 2
+        } else if self.pageControlAliment == .left {
+            pX = pageControlMargin + 10
+        } else if self.pageControlAliment == .right {
+            pX = self.frame.width - pSize.width - (pageControlMargin + 10)
+        }
+        let pY = self.frame.height - pSize.height - pageControlMargin
+        
+        let pageControlFrame = CGRect(x: pX + self.pageControlInsets.left - self.pageControlInsets.right, y: pY + self.pageControlInsets.top - self.pageControlInsets.bottom, width: pSize.width, height: pSize.height)
+        self.pageControl!.frame = pageControlFrame
     }
     
     private func pageControlIndex(cellIndex: Int) -> Int {

@@ -49,7 +49,7 @@ class ViewController: UIViewController {
         cycleScrollView.pageControlAliment = .right
         cycleScrollView.currentPageDotEnlargeTimes = 1.0
         cycleScrollView.customDotViewType = .solid
-        cycleScrollView.pageControlDotSize = CGSize(width: 12, height: 12)
+        cycleScrollView.pageControlDotSize = CGSize(width: 8, height: 8)
         cycleScrollView.scrollDirection = .vertical
         cycleScrollView.currentPageDotColor = UIColor.red
         cycleScrollView.pageDotColor = UIColor.white
